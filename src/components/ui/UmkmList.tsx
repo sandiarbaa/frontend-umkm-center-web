@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import api from "../../../lib/api";
 import Image from "next/image";
+import { MapPin, Phone } from "lucide-react";
 
 interface Umkm {
   id: number;
@@ -31,7 +32,10 @@ export default function UmkmList() {
 
   return (
     <div className="mt-8">
-      <h2 className="text-2xl font-bold mb-16 text-gray-800 text-center">Daftar UMKM</h2>
+      <h2 className="text-2xl font-bold mb-16 text-center
+      bg-gradient-to-br from-blue-700 to-indigo-900 
+            bg-clip-text text-transparent 
+            drop-shadow-lg">Daftar UMKM</h2>
 
       {/* Grid Card */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -57,18 +61,19 @@ export default function UmkmList() {
             </div>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm line-clamp-3 mb-4">
+            <p className="text-gray-600 text-sm line-clamp-3 mb-4 mt-2">
               {umkm.description}
             </p>
 
             {/* Info */}
             <div className="text-sm text-gray-500 mt-auto">
-              <p className="mb-1">
-                <span className="font-semibold text-gray-700">Alamat:</span>{" "}
+              <p className="mb-1 flex items-center gap-1">
+                <MapPin className="w-4 h-4 text-indigo-600" />
                 {umkm.address}
               </p>
-              <p>
-                <span className="font-semibold text-gray-700">Telp:</span>{" "}
+              <p className="mb-1 flex items-center gap-1">
+                <Phone className="w-4 h-4 text-indigo-600" />
+                <span className="font-semibold text-gray-700"></span>{"   "}
                 {umkm.phone}
               </p>
             </div>

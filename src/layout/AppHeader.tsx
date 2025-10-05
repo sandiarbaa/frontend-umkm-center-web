@@ -1,16 +1,24 @@
 "use client";
 import { ThemeToggleButton } from "@/components/common/ThemeToggleButton";
-import NotificationDropdown from "@/components/header/NotificationDropdown";
+// import NotificationDropdown from "@/components/header/NotificationDropdown";
 import UserDropdown from "@/components/header/UserDropdown";
+import Button from "@/components/ui/button/Button";
 import { useSidebar } from "@/context/SidebarContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState ,useEffect,useRef} from "react";
+import api from "../../lib/api";
+import { useRole } from "@/context/RoleContext";
 
 const AppHeader: React.FC = () => {
   const [isApplicationMenuOpen, setApplicationMenuOpen] = useState(false);
 
   const { isMobileOpen, toggleSidebar, toggleMobileSidebar } = useSidebar();
+
+  const [isChecking, setIsChecking] = useState<boolean>(true)
+  const router = useRouter()
+  const { logout } = useRole();
 
   const handleToggle = () => {
     if (window.innerWidth >= 1024) {
@@ -39,6 +47,48 @@ const AppHeader: React.FC = () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+      const token = localStorage.getItem('token')
+      if(!token) {
+        router.push('/welcome')
+      } else {
+        setIsChecking(false)
+      }
+    }, [router])
+
+    const handleLogout = async () => {
+      try {
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          logout();
+          return;
+        }
+        
+        await api.post('/logout', {}, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        })
+
+        logout()
+        router.push('/welcome')
+      } catch (error) {
+        console.error('Logout gagal:', error);
+      }
+    }
+  
+    if(isChecking) {
+      return (
+        <div className="fixed inset-0 flex items-center justify-center bg-white dark:bg-gray-900 z-50">
+          <div className="flex flex-col items-center">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-2"></div>
+            <p className="text-gray-600 dark:text-gray-300 text-sm">Checking access...</p>
+          </div>
+        </div>
+      )
+    }
 
   return (
     <header className="sticky top-0 flex w-full bg-white border-gray-200 z-99999 dark:border-gray-800 dark:bg-gray-900 lg:border-b">
@@ -165,11 +215,15 @@ const AppHeader: React.FC = () => {
             <ThemeToggleButton />
             {/* <!-- Dark Mode Toggler --> */}
 
-           <NotificationDropdown /> 
+           {/* <NotificationDropdown />  */}
             {/* <!-- Notification Menu Area --> */}
           </div>
           {/* <!-- User Area --> */}
           <UserDropdown /> 
+    
+          <Button size="sm" variant="primary" onClick={handleLogout}>
+            Logout
+          </Button>
     
         </div>
       </div>

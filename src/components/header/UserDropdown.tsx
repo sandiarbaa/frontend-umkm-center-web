@@ -1,11 +1,13 @@
 "use client";
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Dropdown } from "../ui/dropdown/Dropdown";
 import { DropdownItem } from "../ui/dropdown/DropdownItem";
+import { useRole } from "@/context/RoleContext";
 
 export default function UserDropdown() {
+  const { role } = useRole();
   const [isOpen, setIsOpen] = useState(false);
 
 function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -22,16 +24,22 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         onClick={toggleDropdown} 
         className="flex items-center text-gray-700 dark:text-gray-400 dropdown-toggle"
       >
-        <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
+        {/* <span className="mr-3 overflow-hidden rounded-full h-11 w-11">
           <Image
             width={44}
             height={44}
             src="/images/user/owner.jpg"
             alt="User"
           />
-        </span>
+        </span> */}
 
-        <span className="block mr-1 font-medium text-theme-sm">Musharof</span>
+        <span className="block mr-1 font-medium text-theme-sm">
+          {role === 'admin' ? (
+            <p>{role}</p>
+          ) : (
+            <p>guest</p>
+          )}
+        </span>
 
         <svg
           className={`stroke-gray-500 dark:stroke-gray-400 transition-transform duration-200 ${

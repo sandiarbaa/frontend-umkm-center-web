@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState,useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
   BoxCubeIcon,
@@ -96,7 +96,9 @@ const othersItems: NavItem[] = [
 
 const AppSidebar: React.FC = () => {
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
+  const [isChecking, setIsChecking] = useState<boolean>(true)
   const pathname = usePathname();
+  const router = useRouter()
 
   const renderMenuItems = (
     navItems: NavItem[],
@@ -275,6 +277,26 @@ const AppSidebar: React.FC = () => {
     }
   }, [openSubmenu]);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if(!token) {
+      router.push('/welcome')
+    } else {
+      setIsChecking(false)
+    }
+  }, [router])
+
+  if(isChecking) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white dark:bg-gray-900 z-50">
+        <div className="flex flex-col items-center">
+          <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-2"></div>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">Checking access...</p>
+        </div>
+      </div>
+    )
+  }
+  
   const handleSubmenuToggle = (index: number, menuType: "main" | "others") => {
     setOpenSubmenu((prevOpenSubmenu) => {
       if (
