@@ -6,17 +6,18 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
   BoxCubeIcon,
-  CalenderIcon,
+  // CalenderIcon,
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  ListIcon,
-  PageIcon,
+  // ListIcon,
+  // PageIcon,
   PieChartIcon,
   PlugInIcon,
-  TableIcon,
-  UserCircleIcon,
+  // TableIcon,
+  // UserCircleIcon,
 } from "../icons/index";
+import { useRole } from "@/context/RoleContext";
 // import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
@@ -26,7 +27,7 @@ type NavItem = {
   subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
 };
 
-const navItems: NavItem[] = [
+const navItemsAdmin: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Region",
@@ -50,40 +51,16 @@ const navItems: NavItem[] = [
   
 ];
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const navItemsOri: NavItem[] = [
+const navItemsOwner: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    name: "UMKM",
+    subItems: [{ name: "Kelola UMKM", path: "/umkm", pro: false }],
   },
   {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
-  },
-  {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
-  },
-
-  {
-    name: "Forms",
-    icon: <ListIcon />,
-    subItems: [{ name: "Form Elements", path: "/form-elements", pro: false }],
-  },
-  {
-    name: "Tables",
-    icon: <TableIcon />,
-    subItems: [{ name: "Basic Tables", path: "/basic-tables", pro: false }],
-  },
-  {
-    name: "Pages",
-    icon: <PageIcon />,
-    subItems: [
-      { name: "Blank Page", path: "/blank", pro: false },
-      { name: "404 Error", path: "/error-404", pro: false },
-    ],
+    icon: <GridIcon />,
+    name: "Product",
+    subItems: [{ name: "Kelola Product", path: "/product", pro: false }],
   },
 ];
 
@@ -119,6 +96,7 @@ const othersItems: NavItem[] = [
 ];
 
 const AppSidebar: React.FC = () => {
+  const { role } = useRole();
   const { isExpanded, isMobileOpen, isHovered, setIsHovered } = useSidebar();
   const [isChecking, setIsChecking] = useState<boolean>(true)
   const pathname = usePathname();
@@ -259,14 +237,16 @@ const AppSidebar: React.FC = () => {
   );
   const subMenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
+    const menuToRender = role === "owner" ? navItemsOwner : navItemsAdmin;
+
   // const isActive = (path: string) => path === pathname;
-   const isActive = useCallback((path: string) => path === pathname, [pathname]);
+  const isActive = useCallback((path: string) => path === pathname, [pathname]);
 
   useEffect(() => {
     // Check if the current path matches any submenu item
     let submenuMatched = false;
     ["main", "others"].forEach((menuType) => {
-      const items = menuType === "main" ? navItems : othersItems;
+      const items = menuType === "main" ? navItemsAdmin : othersItems;
       items.forEach((nav, index) => {
         if (nav.subItems) {
           nav.subItems.forEach((subItem) => {
@@ -399,7 +379,7 @@ const AppSidebar: React.FC = () => {
                   <HorizontaLDots />
                 )}
               </h2>
-              {renderMenuItems(navItems, "main")}
+              {renderMenuItems(menuToRender, "main")}
             </div>
 
             {/* <div className="">
