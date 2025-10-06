@@ -9,7 +9,7 @@ import { ChevronDownIcon, EyeCloseIcon, EyeIcon } from '../../../icons';
 import Button from '@/components/ui/button/Button';
 import { useRouter } from 'next/navigation';
 
-export default function DefaultInputs() {
+export default function DefaultInputsUpdateUser() {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false);
   const options = [
@@ -20,7 +20,7 @@ export default function DefaultInputs() {
     console.log("Selected value:", value);
   };
   return (
-    <ComponentCard title="Form Add User">
+    <ComponentCard title="Form Update User">
       <div className="space-y-6">
         <div>
           <Label>Name</Label>
@@ -70,7 +70,7 @@ export default function DefaultInputs() {
             Back
           </Button>
           <Button size="sm" variant="primary">
-            Add User
+            Update User
           </Button>
         </div>
         </div>

@@ -10,8 +10,8 @@ export default function HeroSection() {
         <div className="font-semibold tracking-widest 
         bg-gradient-to-br from-blue-700 to-indigo-900 
             bg-clip-text text-transparent 
-            drop-shadow-lg">LOGO</div>
-        <Link href={"/signin"}>
+            drop-shadow-lg absolute left-0 top-0 md:static ml-5 md:ml-0">LOGO</div>
+        <Link href={"/signin"} className="absolute right-0 top-0 md:static mr-5 md:mr-5">
           <Button size="sm" variant="outline"
             className="shadow-lg px-6 py-2 rounded-xl font-semibold
             bg-gradient-to-br from-blue-700 to-indigo-900
@@ -25,8 +25,8 @@ export default function HeroSection() {
       </div>
 
       {/* Hero */}
-      <div className="flex justify-between items-center">
-        <div className="w-[460px] text-black">
+      <div className="flex flex-col md:flex-row justify-between items-center">
+        <div className="w-[460px] text-black order-2 md:order-1 text-center md:text-left">
           <h1 className="text-xl text-black font-semibold tracking-[5px] 2xl:text-3xl">PORTAL UMKM</h1>
           <h1 
             className="text-4xl font-bold 2xl:text-5xl 
@@ -36,7 +36,7 @@ export default function HeroSection() {
           >
             PARUNG SERAB
           </h1>
-          <p className="mt-5 text-lg 2xl:text-2xl text-gray-400">Selamat datang di portal resmi UMKM Kelurahan Parung Serab.
+          <p className="mt-5 text-lg 2xl:text-2xl text-gray-400 px-14 md:px-0">Selamat datang di portal resmi UMKM Kelurahan Parung Serab.
               Di sini kamu bisa menemukan informasi seputar berbagai usaha mikro, kecil, dan menengah beserta produk unggulannya.
               Kami juga menyediakan update mengenai event serta kegiatan terbaru yang berlangsung di Kelurahan Parung Serab.</p>
           <Button size="sm" variant="outline" 
@@ -49,7 +49,7 @@ export default function HeroSection() {
           </Button>
         </div>
 
-        <div>
+        <div className="order-1 md:order-2">
           <Image
             src="/images/illustration/market.png"
             alt="UMKM Produk"

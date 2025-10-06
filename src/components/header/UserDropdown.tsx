@@ -7,7 +7,7 @@ import { DropdownItem } from "../ui/dropdown/DropdownItem";
 import { useRole } from "@/context/RoleContext";
 
 export default function UserDropdown() {
-  const { role } = useRole();
+  const { name, role } = useRole();
   const [isOpen, setIsOpen] = useState(false);
 
 function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
@@ -34,10 +34,13 @@ function toggleDropdown(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
         </span> */}
 
         <span className="block mr-1 font-medium text-theme-sm">
+          <p className="font-semibold text-lg">{name}</p>
           {role === 'admin' ? (
             <p>{role}</p>
+          ) : (role === 'owner') ? (
+            <p>{role}</p>
           ) : (
-            <p>guest</p>
+            <p>{role}</p>
           )}
         </span>
 

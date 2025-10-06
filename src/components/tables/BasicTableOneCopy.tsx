@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   Table,
@@ -9,16 +7,14 @@ import {
   TableRow,
 } from "../ui/table";
 
+import Badge from "../ui/badge/Badge";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { PencilIcon, TrashIcon } from "lucide-react";
 
 interface Order {
   id: number;
   user: {
     image: string;
     name: string;
-    email: string;
     role: string;
   };
   projectName: string;
@@ -36,8 +32,7 @@ const tableData: Order[] = [
     user: {
       image: "/images/user/user-17.jpg",
       name: "Lindsey Curtis",
-      email: "lindsey@gmail.com",
-      role: "Admin",
+      role: "Web Designer",
     },
     projectName: "Agency Website",
     team: {
@@ -55,8 +50,7 @@ const tableData: Order[] = [
     user: {
       image: "/images/user/user-18.jpg",
       name: "Kaiya George",
-      email: "kaiya@gmail.com",
-      role: "Admin",
+      role: "Project Manager",
     },
     projectName: "Technology",
     team: {
@@ -70,8 +64,7 @@ const tableData: Order[] = [
     user: {
       image: "/images/user/user-17.jpg",
       name: "Zain Geidt",
-      email: "zain@gmail.com",
-      role: "Owner",
+      role: "Content Writing",
     },
     projectName: "Blog Writing",
     team: {
@@ -85,8 +78,7 @@ const tableData: Order[] = [
     user: {
       image: "/images/user/user-20.jpg",
       name: "Abram Schleifer",
-      email: "abram@gmail.com",
-      role: "Owner",
+      role: "Digital Marketer",
     },
     projectName: "Social Media",
     team: {
@@ -104,8 +96,7 @@ const tableData: Order[] = [
     user: {
       image: "/images/user/user-21.jpg",
       name: "Carla George",
-      email: "carla@gmail.com",
-      role: "owner",
+      role: "Front-end Developer",
     },
     projectName: "Website",
     team: {
@@ -121,7 +112,6 @@ const tableData: Order[] = [
 ];
 
 export default function BasicTableOne() {
-  const router = useRouter()
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
@@ -134,19 +124,31 @@ export default function BasicTableOne() {
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  Name
+                  User
                 </TableCell>
                 <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  Email
+                  Project Name
                 </TableCell>
                 <TableCell
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
-                  Action
+                  Team
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Status
+                </TableCell>
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
+                  Budget
                 </TableCell>
               </TableRow>
             </TableHeader>
@@ -176,24 +178,42 @@ export default function BasicTableOne() {
                     </div>
                   </TableCell>
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                    {order.user.email}
+                    {order.projectName}
                   </TableCell>
-                  {/* Action */}
-                  <TableCell className="px-4 py-3 text-start">
-                    <div className="flex items-center gap-3">
-                      <button
-                        onClick={() => router.push('/user/update-user')}
-                        className="inline-flex items-center gap-1.5 text-primary-500 hover:text-primary-600 text-sm font-medium transition-colors"
-                      >
-                        <PencilIcon size={16} />
-                      </button>
-
-                      <button
-                        className="inline-flex items-center gap-1.5 text-error-500 hover:text-error-600 text-sm font-medium transition-colors"
-                      >
-                        <TrashIcon size={16} />
-                      </button>
+                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                    <div className="flex -space-x-2">
+                      {order.team.images.map((teamImage, index) => (
+                        <div
+                          key={index}
+                          className="w-6 h-6 overflow-hidden border-2 border-white rounded-full dark:border-gray-900"
+                        >
+                          <Image
+                            width={24}
+                            height={24}
+                            src={teamImage}
+                            alt={`Team member ${index + 1}`}
+                            className="w-full"
+                          />
+                        </div>
+                      ))}
                     </div>
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                    <Badge
+                      size="sm"
+                      color={
+                        order.status === "Active"
+                          ? "success"
+                          : order.status === "Pending"
+                          ? "warning"
+                          : "error"
+                      }
+                    >
+                      {order.status}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                    {order.budget}
                   </TableCell>
                 </TableRow>
               ))}

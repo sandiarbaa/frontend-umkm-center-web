@@ -17,7 +17,7 @@ import {
   TableIcon,
   UserCircleIcon,
 } from "../icons/index";
-import SidebarWidget from "./SidebarWidget";
+// import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
   name: string;
@@ -27,6 +27,30 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
+  {
+    icon: <GridIcon />,
+    name: "Region",
+    subItems: [{ name: "Kelola Region", path: "/region", pro: false }],
+  },
+  {
+    icon: <GridIcon />,
+    name: "User",
+    subItems: [{ name: "Kelola User", path: "/user", pro: false }],
+  },
+  {
+    icon: <GridIcon />,
+    name: "UMKM",
+    subItems: [{ name: "Kelola UMKM", path: "/umkm", pro: false }],
+  },
+  {
+    icon: <GridIcon />,
+    name: "Event",
+    subItems: [{ name: "Kelola Event", path: "/event", pro: false }],
+  },
+  
+];
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const navItemsOri: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
@@ -378,7 +402,7 @@ const AppSidebar: React.FC = () => {
               {renderMenuItems(navItems, "main")}
             </div>
 
-            <div className="">
+            {/* <div className="">
               <h2
                 className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
                   !isExpanded && !isHovered
@@ -393,10 +417,10 @@ const AppSidebar: React.FC = () => {
                 )}
               </h2>
               {renderMenuItems(othersItems, "others")}
-            </div>
+            </div> */}
           </div>
         </nav>
-        {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null}
+        {/* {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null} */}
       </div>
     </aside>
   );

@@ -10,7 +10,9 @@ import React, {
 
 // ====== TYPE ======
 type RoleContextType = {
+  name: string | null;
   role: string | null;
+  setName: (name: string | null) => void;
   setRole: (role: string | null) => void;
   logout: () => void;
 };
@@ -28,31 +30,39 @@ export const useRole = () => {
 };
 
 // ====== PROVIDER ======
-export const RoleProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const RoleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [name, setName] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
 
-  // Load role dari localStorage saat pertama kali
+  // Load name & role dari localStorage saat pertama kali
   useEffect(() => {
+    const storedName = localStorage.getItem("name");
     const storedRole = localStorage.getItem("role");
+
+    if (storedName) setName(storedName);
     if (storedRole) setRole(storedRole);
   }, []);
 
-  // Simpan role ke localStorage setiap kali berubah
+  // Simpan name & role ke localStorage setiap kali berubah
   useEffect(() => {
+    if (name) localStorage.setItem("name", name);
+    else localStorage.removeItem("name");
+
     if (role) localStorage.setItem("role", role);
     else localStorage.removeItem("role");
-  }, [role]);
+  }, [name, role]);
 
+  // Hapus semua data saat logout
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("name");
+    setName(null);
     setRole(null);
   };
 
   return (
-    <RoleContext.Provider value={{ role, setRole, logout }}>
+    <RoleContext.Provider value={{ name, role, setName, setRole, logout }}>
       {children}
     </RoleContext.Provider>
   );
