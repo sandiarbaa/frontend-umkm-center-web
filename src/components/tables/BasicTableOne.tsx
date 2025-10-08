@@ -9,13 +9,14 @@ import {
   TableRow,
 } from "../ui/table";
 
-// import Image from "next/image";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { PencilIcon, TrashIcon } from "lucide-react";
+import { EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
 import api from "../../../lib/api";
 import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import { useModal } from "@/hooks/useModal";
+// import Image from "next/image";
 
 interface Role {
   id: number;
@@ -28,6 +29,7 @@ interface User {
   id: number;
   name: string;
   email: string;
+  image_url: string;
   created_at: string;
   updated_at: string;
   roles : Role[];
@@ -104,16 +106,17 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                     <TableRow key={user.id}>
                       <TableCell className="px-5 py-4 sm:px-6 text-start">
                         <div className="flex items-center gap-3">
-                          {/* <div className="w-10 h-10 overflow-hidden rounded-full">
+                          <div className="w-10 h-10 overflow-hidden rounded-full">
                             <Image
                               width={40}
                               height={40}
-                              src={order.user.image}
-                              alt={order.user.name}
+                              src={user.image_url ? user.image_url : '/images/user/user-22.jpg'}
+                              alt={user.name}
                             />
-                          </div> */}
+                          </div>
                           <div>
                             <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
+                            {/* {console.log(user);} */}
                               {user.name}
                             </span>
                             <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
@@ -129,6 +132,14 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
 
                       <TableCell className="px-4 py-3 text-start">
                         <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => router.push(`/user/${user.id}`)}
+                            className="inline-flex items-center gap-1.5 text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors"
+                            title="Lihat Detail"
+                          >
+                            <EyeIcon size={16} />
+                          </button>
+                          
                           <button
                             onClick={() => router.push(`/user/update-user/${user.id}`)}
                             className="inline-flex items-center gap-1.5 text-primary-500 hover:text-primary-600 text-sm font-medium transition-colors"

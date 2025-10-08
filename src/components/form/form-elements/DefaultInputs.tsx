@@ -9,6 +9,8 @@ import { ChevronDownIcon, EyeCloseIcon, EyeIcon } from '../../../icons';
 import Button from '@/components/ui/button/Button';
 import { useRouter } from 'next/navigation';
 import api from '../../../../lib/api';
+import FileInputExample from './FileInputExample';
+import Image from 'next/image';
 
 export default function DefaultInputs() {
   const router = useRouter()
@@ -16,7 +18,9 @@ export default function DefaultInputs() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [role, setRole] = useState<string>('')
+  const [image, setImage] = useState<File | null>(null)
   const [showPassword, setShowPassword] = useState(false);
+  const [preview, setPreview] = useState<string>(""); // preview foto lama
   const [loading, setLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<{ [key:string]: string }>({})
 
@@ -31,44 +35,78 @@ export default function DefaultInputs() {
 
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!name.trim()) newErrors.name = "Nama wajib diisi";
-    if (!email) newErrors.email = "Email wajib dipilih";
-    if (!password) newErrors.password = "password wajib diisi | min:6 Huruf";
-    if (!role) newErrors.role = "Role wajib dipilih";
+
+    // Name
+    if (!name.trim()) {
+      newErrors.name = "Nama wajib diisi";
+    }
+
+    // Email
+    if (!email.trim()) {
+      newErrors.email = "Email wajib diisi";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Format email tidak valid";
+    }
+
+    // Password
+    if (!password.trim()) {
+      newErrors.password = "Password wajib diisi";
+    } else if (password.length < 6) {
+      newErrors.password = "Password minimal 6 karakter";
+    }
+
+    // Role
+    if (!role) {
+      newErrors.role = "Role wajib dipilih";
+    }
+
+    // Image (optional atau wajib, terserah kamu)
+    if (!image) {
+      newErrors.image = "Foto wajib diupload";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
   
   const handleAddUser = async () => {
-    if(!validate()) return
+    if (!validate()) return;
     try {
-      setLoading(true)
-      const token = localStorage.getItem('token')
-      await api.post('/users', {
-        name,
-        email,
-        password,
-        role
-      }, {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("role", role);
+
+      if (image) {
+        formData.append("image_path", image);
+      }
+
+      await api.post("/users", formData, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       // reset state
-      setName('');
-      setEmail('');
-      setPassword('');
-      setRole('');
-      
+      setName("");
+      setEmail("");
+      setPassword("");
+      setRole("");
+      setImage(null);
+
       router.push("/user?success=1");
     } catch (error) {
-      console.log('Error: ', error);
+      console.log("Error: ", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-  
+  };
+
   return (
     <ComponentCard title="Form Add User">
       <div className="space-y-6">
@@ -81,7 +119,7 @@ export default function DefaultInputs() {
         </div>
         <div>
           <Label>Email</Label>
-          <Input type="email" placeholder="johndoe@gmail.com" onChange={(e) => setEmail(e.target.value)}/>
+          <Input type="email" placeholder="youremail@gmail.com" onChange={(e) => setEmail(e.target.value)}/>
           {errors.email && (
             <p className="mt-1 text-sm text-red-500">{errors.email}</p>
           )}
@@ -128,7 +166,29 @@ export default function DefaultInputs() {
           )}
         </div>
 
-        <div className='flex justify-end gap-x-3'>
+        <div className='flex flex-col items-center justify-center md:flex-row md:justify-start gap-x-10'>
+          <FileInputExample
+            title="Foto"
+            setter={setImage}
+            setPreview={setPreview}
+            error={errors.image}
+            />
+
+            {preview && (
+              <div className="mb-3 mt-10 md:mt-0 mx-auto">
+                <Label className='text-center'>Preview Image</Label>
+                <Image
+                  src={preview}
+                  alt="Preview"
+                  width={300}
+                  height={300}
+                  className="object-cover rounded-lg border mx-auto"
+                />
+              </div>
+            )}
+        </div>
+
+        <div className='flex justify-center md:justify-end gap-x-3'>
           <Button size="sm" variant="primary" onClick={() => router.push('/user')}>
             Back
           </Button>
