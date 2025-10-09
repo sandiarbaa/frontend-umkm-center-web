@@ -156,7 +156,7 @@ export default function BasicTableUmkm({
                 ) : (
                   <TableRow>
                     <TableCell className="px-4 py-3 text-gray-500">
-                      Tidak ada data
+                      No data.
                     </TableCell>
                   </TableRow>
                 )}

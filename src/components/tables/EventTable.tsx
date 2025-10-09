@@ -8,150 +8,150 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
-import api from "../../../lib/api";
-import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
+import { Modal } from "../ui/modal";
 import { useModal } from "@/hooks/useModal";
-// import Image from "next/image";
+import api from "../../../lib/api";
+import { useRouter } from "next/navigation";
 
-interface Role {
+interface Event {
   id: number;
-  name: string;
-  guard_name: string;
+  title: string;
+  description: string;
+  places: string;
+  event_date: string;
+  start_date: string;
+  end_date: string;
+  image_url?: string;
   created_at: string;
-  updated_at: string;
-}
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  image_url: string;
-  created_at: string;
-  updated_at: string;
-  roles : Role[];
 }
 
-export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: () => void }) {
-  const router = useRouter()
-  const { isOpen, openModal, closeModal } = useModal();
-  const [users, setUsers] = useState<User[] | []>([])
+export default function EventTable({
+  onDeleteSuccess,
+}: {
+  onDeleteSuccess: () => void;
+}) {
+  const [events, setEvents] = useState<Event[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const { isOpen, openModal, closeModal } = useModal();
+  const router = useRouter();
 
-  const fetchUsers = async () => {
+  const fetchEvents = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const res = await api.get('/users', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      setUsers(res.data)
+      const token = localStorage.getItem("token");
+      const res = await api.get("/events", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setEvents(res.data.data);
     } catch (error) {
-      console.log('Error: ', error);
+      console.error("Error fetching events:", error);
     }
-  }
-  
+  };
+
   useEffect(() => {
-    fetchUsers()
-  }, [])
-  
-  const columns = ['Name', 'Email', 'Action'];
-  
-  const handleDeleteUser = async () => {
+    fetchEvents();
+  }, []);
+
+  const handleDeleteEvent = async () => {
     if (!selectedId) return;
     try {
-      const token = localStorage.getItem('token')
-      await api.delete(`/users/${selectedId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      fetchUsers();
+      const token = localStorage.getItem("token");
+      await api.delete(`/events/${selectedId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchEvents();
       closeModal();
       onDeleteSuccess();
     } catch (error) {
-      console.log('Error: ', error);
+      console.error("Gagal hapus event:", error);
     }
-  }
-  
+  };
+
+  const columns = ["Title", "Tempat", "Tanggal", "Action"];
+
   return (
     <>
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
-          <div className="min-w-[1102px]">
+          <div className="min-w-[1000px]">
             <Table>
-              {/* Table Header */}
               <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                 <TableRow>
-                  {columns.map((column) => (
+                  {columns.map((col) => (
                     <TableCell
-                      key={column}
+                      key={col}
                       isHeader
                       className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                     >
-                      {column}
+                      {col}
                     </TableCell>
                   ))}
                 </TableRow>
               </TableHeader>
 
-              {/* Table Body */}
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                {users.length > 0 ? (
-                  users?.map((user) => (
-                    <TableRow key={user.id}>
+                {events.length > 0 ? (
+                  events.map((event) => (
+                    <TableRow key={event.id}>
                       <TableCell className="px-5 py-4 sm:px-6 text-start">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 overflow-hidden rounded-full">
+                          <div className="w-12 h-12 overflow-hidden rounded-lg">
                             <Image
-                              width={40}
-                              height={40}
-                              src={user.image_url ? user.image_url : '/images/user/user-22.jpg'}
-                              alt={user.name}
+                              width={48}
+                              height={48}
+                              src={
+                                event.image_url || "/images/product/no-image.jpg"
+                              }
+                              alt={event.title}
+                              className="object-cover"
                             />
                           </div>
                           <div>
-                            <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                              {user.name}
+                            <span className="block font-semibold text-gray-800 dark:text-white/90">
+                              {event.title}
                             </span>
-                            <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
-                              {user.roles[0].name}
+                            <span className="block text-gray-500 text-theme-xs dark:text-gray-400 line-clamp-1 max-w-[300px]">
+                              {event.description}
                             </span>
                           </div>
                         </div>
                       </TableCell>
+
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                        {user.email}
+                        {event.places || "-"}
                       </TableCell>
-                      {/* Action */}
+
+                      <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                        {event.event_date || "-"}
+                      </TableCell>
 
                       <TableCell className="px-4 py-3 text-start">
                         <div className="flex items-center gap-3">
                           <button
-                            onClick={() => router.push(`/user/${user.id}`)}
-                            className="inline-flex items-center gap-1.5 text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors"
+                            onClick={() => router.push(`/event/${event.id}`)}
+                            className="inline-flex items-center text-blue-500 hover:text-blue-600 text-sm font-medium"
                             title="Lihat Detail"
                           >
                             <EyeIcon size={16} />
                           </button>
-                          
                           <button
-                            onClick={() => router.push(`/user/update-user/${user.id}`)}
-                            className="inline-flex items-center gap-1.5 text-primary-500 hover:text-primary-600 text-sm font-medium transition-colors"
+                            onClick={() =>
+                              router.push(`/event/update-event/${event.id}`)
+                            }
+                            className="inline-flex items-center text-primary-500 hover:text-primary-600 text-sm font-medium"
+                            title="Edit Event"
                           >
                             <PencilIcon size={16} />
                           </button>
-
                           <button
-                            className="inline-flex items-center gap-1.5 text-error-500 hover:text-error-600 text-sm font-medium transition-colors"
                             onClick={() => {
-                            setSelectedId(user.id);
-                            openModal();
-                          }}
+                              setSelectedId(event.id);
+                              openModal();
+                            }}
+                            className="inline-flex items-center text-error-500 hover:text-error-600 text-sm font-medium"
+                            title="Hapus Event"
                           >
                             <TrashIcon size={16} />
                           </button>
@@ -161,19 +161,18 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                      No Data.
+                    <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                      No data.
                     </TableCell>
                   </TableRow>
                 )}
-
               </TableBody>
             </Table>
           </div>
         </div>
       </div>
 
-      {/* Modal Konfirmasi Delete */}
+      {/* Modal konfirmasi delete */}
       <Modal
         isOpen={isOpen}
         onClose={closeModal}
@@ -183,13 +182,13 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
           Konfirmasi Hapus
         </h4>
         <p className="text-md leading-6 text-gray-500 dark:text-gray-400">
-          Apakah kamu yakin ingin menghapus data ini?
+          Apakah kamu yakin ingin menghapus event ini?
         </p>
         <div className="flex items-center justify-end w-full gap-3 mt-8">
           <Button size="sm" variant="outline" onClick={closeModal}>
             Batal
           </Button>
-          <Button size="sm" variant="danger" onClick={handleDeleteUser}>
+          <Button size="sm" variant="danger" onClick={handleDeleteEvent}>
             Hapus
           </Button>
         </div>

@@ -129,7 +129,7 @@ export default function RegionTable({ onDeleteSuccess }: { onDeleteSuccess: () =
                 ) : (
                   <TableRow>
                     <TableCell className="px-4 py-3 text-gray-500 text-center text-theme-sm dark:text-gray-400">
-                      No Data
+                      No Data.
                     </TableCell>
                   </TableRow>
                 )}
