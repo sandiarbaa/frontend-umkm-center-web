@@ -1,12 +1,12 @@
 "use client"
 
-import BasicTableOne from "@/components/tables/BasicTableOne";
+import RegionTable from "@/components/tables/RegionTable";
 import Alert from "@/components/ui/alert/Alert";
 import Button from "@/components/ui/button/Button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function UserPage() {
+export default function RegionPage() {
   const router = useRouter()
   const searchParams = useSearchParams();
   const success = searchParams.get("success");
@@ -50,17 +50,17 @@ export default function UserPage() {
   
   return (
     <div>
-      <h1>User Page</h1>
+      <h1>Region Page</h1>
 
-      <Button size="sm" variant="primary" onClick={() => router.push('/user/add-user')} className="my-5">
-        Add User
+      <Button size="sm" variant="primary" onClick={() => router.push('/region/add-region')} className="my-5">
+        Add Region
       </Button>
 
       {showAlert && (
         <Alert
           variant="success"
           title="Berhasil!"
-          message="User berhasil ditambahkan."
+          message="Region berhasil ditambahkan."
         />
       )}
 
@@ -68,7 +68,7 @@ export default function UserPage() {
         <Alert
           variant="success"
           title="Berhasil!"
-          message="User berhasil diubah."
+          message="Region berhasil diubah."
         />
       )}
 
@@ -76,11 +76,11 @@ export default function UserPage() {
         <Alert
           variant="success"
           title="Berhasil!"
-          message="User berhasil dihapus."
+          message="Region berhasil dihapus."
         />
       )}
 
-      <BasicTableOne onDeleteSuccess={() => setDeleteSuccess(true)}/>
+      <RegionTable onDeleteSuccess={() => setDeleteSuccess(true)}/>
     </div>
   )
 }

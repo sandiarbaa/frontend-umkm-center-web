@@ -175,7 +175,7 @@ export default function DefaultInputs() {
             />
 
             {preview && (
-              <div className="mb-3 mt-10 md:mt-0 mx-auto">
+              <div className="mb-3 mt-5 md:mt-0 mx-auto">
                 <Label className='text-center'>Preview Image</Label>
                 <Image
                   src={preview}

@@ -9,7 +9,6 @@ import {
   TableRow,
 } from "../ui/table";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { EyeIcon, PencilIcon, TrashIcon } from "lucide-react";
 import api from "../../../lib/api";
@@ -18,59 +17,47 @@ import Button from "../ui/button/Button";
 import { useModal } from "@/hooks/useModal";
 // import Image from "next/image";
 
-interface Role {
+interface Region {
   id: number;
   name: string;
-  guard_name: string;
-  created_at: string;
-  updated_at: string;
-}
-interface User {
-  id: number;
-  name: string;
-  email: string;
-  image_url: string;
-  created_at: string;
-  updated_at: string;
-  roles : Role[];
 }
 
-export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: () => void }) {
+export default function RegionTable({ onDeleteSuccess }: { onDeleteSuccess: () => void }) {
   const router = useRouter()
   const { isOpen, openModal, closeModal } = useModal();
-  const [users, setUsers] = useState<User[] | []>([])
+  const [regions, setRegions] = useState<Region[] | []>([])
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
-  const fetchUsers = async () => {
+  const fetchRegions = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await api.get('/users', {
+      const res = await api.get('/regions', {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      setUsers(res.data)
+      setRegions(res.data)
     } catch (error) {
       console.log('Error: ', error);
     }
   }
   
   useEffect(() => {
-    fetchUsers()
+    fetchRegions()
   }, [])
   
-  const columns = ['Name', 'Email', 'Action'];
+  const columns = ['Name', 'Action'];
   
-  const handleDeleteUser = async () => {
+  const handleDeleteRegion = async () => {
     if (!selectedId) return;
     try {
       const token = localStorage.getItem('token')
-      await api.delete(`/users/${selectedId}`, {
+      await api.delete(`/regions/${selectedId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      fetchUsers();
+      fetchRegions();
       closeModal();
       onDeleteSuccess();
     } catch (error) {
@@ -101,38 +88,18 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
 
               {/* Table Body */}
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                {users.length > 0 ? (
-                  users?.map((user) => (
-                    <TableRow key={user.id}>
-                      <TableCell className="px-5 py-4 sm:px-6 text-start">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 overflow-hidden rounded-full">
-                            <Image
-                              width={40}
-                              height={40}
-                              src={user.image_url ? user.image_url : '/images/user/user-22.jpg'}
-                              alt={user.name}
-                            />
-                          </div>
-                          <div>
-                            <span className="block font-medium text-gray-800 text-theme-sm dark:text-white/90">
-                              {user.name}
-                            </span>
-                            <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
-                              {user.roles[0].name}
-                            </span>
-                          </div>
-                        </div>
-                      </TableCell>
+                {regions.length > 0 ? (
+                  regions?.map((region) => (
+                    <TableRow key={region.id}>
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                        {user.email}
+                        {region.name}
                       </TableCell>
                       {/* Action */}
 
                       <TableCell className="px-4 py-3 text-start">
                         <div className="flex items-center gap-3">
                           <button
-                            onClick={() => router.push(`/user/${user.id}`)}
+                            onClick={() => router.push(`/region/${region.id}`)}
                             className="inline-flex items-center gap-1.5 text-blue-500 hover:text-blue-600 text-sm font-medium transition-colors"
                             title="Lihat Detail"
                           >
@@ -140,7 +107,7 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                           </button>
                           
                           <button
-                            onClick={() => router.push(`/user/update-user/${user.id}`)}
+                            onClick={() => router.push(`/region/update-region/${region.id}`)}
                             className="inline-flex items-center gap-1.5 text-primary-500 hover:text-primary-600 text-sm font-medium transition-colors"
                           >
                             <PencilIcon size={16} />
@@ -149,7 +116,7 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                           <button
                             className="inline-flex items-center gap-1.5 text-error-500 hover:text-error-600 text-sm font-medium transition-colors"
                             onClick={() => {
-                            setSelectedId(user.id);
+                            setSelectedId(region.id);
                             openModal();
                           }}
                           >
@@ -161,7 +128,7 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                    <TableCell className="px-4 py-3 text-gray-500 text-center text-theme-sm dark:text-gray-400">
                       No Data
                     </TableCell>
                   </TableRow>
@@ -189,7 +156,7 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
           <Button size="sm" variant="outline" onClick={closeModal}>
             Batal
           </Button>
-          <Button size="sm" variant="danger" onClick={handleDeleteUser}>
+          <Button size="sm" variant="danger" onClick={handleDeleteRegion}>
             Hapus
           </Button>
         </div>
