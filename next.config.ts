@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+    experimental: {
+    reactCompiler: false, // disable React Compiler
+  },
   /* config options here */
   images: {
     remotePatterns: [
