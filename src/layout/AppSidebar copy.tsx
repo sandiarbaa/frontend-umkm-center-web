@@ -6,13 +6,19 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSidebar } from "../context/SidebarContext";
 import {
   BoxCubeIcon,
+  // CalenderIcon,
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
+  // ListIcon,
+  // PageIcon,
   PieChartIcon,
   PlugInIcon,
+  // TableIcon,
+  // UserCircleIcon,
 } from "../icons/index";
 import { useRole } from "@/context/RoleContext";
+// import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
   name: string;
