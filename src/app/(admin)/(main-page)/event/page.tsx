@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import EventTable from "@/components/tables/EventTable";
 import Alert from "@/components/ui/alert/Alert";
 import Button from "@/components/ui/button/Button";
