@@ -12,17 +12,12 @@ import api from "../../../../lib/api";
 import FileInputExample from "./FileInputExample";
 import Image from "next/image";
 
-interface UserOption {
-  value: number;
-  label: string;
-}
-
 interface RegionOption {
   value: number;
   label: string;
 }
 
-export default function DefaultInputsUmkm() {
+export default function DefaultInputsUmkmOwner() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -34,29 +29,14 @@ export default function DefaultInputsUmkm() {
   const [preview, setPreview] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [userOptions, setUserOptions] = useState<UserOption[]>([]);
   const [regionOptions, setRegionOptions] = useState<RegionOption[]>([]);
 
   // Fetch dropdown data
   useEffect(() => {
     const token = localStorage.getItem("token");
-
-    const fetchUsers = async () => {
-      try {
-        const res = await api.get("/users", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const options = res.data.map((u: any) => ({
-          value: u.id,
-          label: u.name,
-        }));
-        setUserOptions(options);
-      } catch (error) {
-        console.log("Error fetching users:", error);
-      }
-    };
-
+    const idLogin = localStorage.getItem("id");
+    setUserId(Number(idLogin));
+    
     const fetchRegions = async () => {
       try {
         const res = await api.get("/regions", {
@@ -73,7 +53,6 @@ export default function DefaultInputsUmkm() {
       }
     };
 
-    fetchUsers();
     fetchRegions();
   }, []);
 
@@ -84,7 +63,6 @@ export default function DefaultInputsUmkm() {
     if (!description.trim()) newErrors.description = "Deskripsi wajib diisi";
     if (!address.trim()) newErrors.address = "Alamat wajib diisi";
     if (!phone.trim()) newErrors.phone = "Nomor telepon wajib diisi";
-    if (!userId) newErrors.userId = "User wajib dipilih";
     if (!regionId) newErrors.regionId = "Region wajib dipilih";
     if (!image) newErrors.image = "Gambar wajib diupload";
 
@@ -173,22 +151,6 @@ export default function DefaultInputsUmkm() {
             onChange={(e) => setPhone(e.target.value)}
           />
           {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
-        </div>
-
-        {/* User Dropdown */}
-        <div>
-          <Label>Pilih Owner</Label>
-          <div className="relative">
-            <Select
-              options={userOptions}
-              placeholder="Pilih user"
-              onChange={(val: string) => setUserId(Number(val))}
-            />
-            <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
-              <ChevronDownIcon />
-            </span>
-          </div>
-          {errors.userId && <p className="mt-1 text-sm text-red-500">{errors.userId}</p>}
         </div>
 
         {/* Region Dropdown */}

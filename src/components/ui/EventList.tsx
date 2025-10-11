@@ -10,7 +10,7 @@ interface Event {
   title: string;
   description: string;
   places: string;
-  image_path: string;
+  image_url: string;
   event_date: string;
   start_date: string;
   end_date: string;
@@ -23,11 +23,13 @@ export default function EventList() {
 
   const fetchEvents = async () => {
     try {
-      const res = await api.get<Event[]>("/events");
-      setEvents(res.data);
+      const res = await api.get("/public/events");
+      const eventData = Array.isArray(res.data.data) ? res.data.data : [];
+      setEvents(eventData);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.log("error: ", error);
+      console.error("Error fetching events:", error);
+      setEvents([]); // fallback ke array kosong
     }
   };
 
@@ -44,17 +46,16 @@ export default function EventList() {
       </h2>
 
       {/* Grid Card */}
-      <div className="space-y-6 grid grid-cols-2 gap-x-10">
-        {events.map((event) => (
+      <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-x-10">
+        {events.length > 0 ? events.map((event) => (
           <div
             key={event.id}
-            className="flex flex-col md:flex-row bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-gray-100 w-[500px]"
+            className="flex flex-col md:flex-row bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden border border-gray-100 md:w-[300px] lg:w-[500px]"
           >
             {/* Image */}
             <div className="md:w-1/3 w-full h-52 relative">
               <Image
-                // src={event.image_path ? `/${event.image_path}` : "/images/cards/card-01.jpg"}
-                src="/images/cards/card-02.jpg"
+                src={event.image_url ? `${event.image_url}` : "/images/cards/card-01.jpg"}
                 alt={event.title}
                 fill
                 className="object-cover"
@@ -86,7 +87,9 @@ export default function EventList() {
             </div>
             </div>
           </div>
-        ))}
+        )) : (
+          <p className="text-center col-span-3 text-gray-500">Tidak ada Event tersedia.</p>
+        )}
       </div>
     </div>
   );

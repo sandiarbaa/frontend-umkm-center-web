@@ -95,7 +95,7 @@ export default function ShowDetailRegionPage() {
       <div className="flex justify-end mt-10">
         <Button
           size="sm"
-          variant="primary"
+          variant="outline"
           onClick={() => router.push("/region")}
           className="rounded-full px-5 py-2"
         >

@@ -151,7 +151,7 @@ export default function BasicTableProduct({
           Konfirmasi Hapus
         </h4>
         <p className="text-md text-gray-500 dark:text-gray-400">
-          Apakah kamu yakin ingin menghapus produk ini?
+          Apakah kamu yakin ingin menghapus data ini?
         </p>
         <div className="flex items-center justify-end w-full gap-3 mt-8">
           <Button size="sm" variant="outline" onClick={closeModal}>

@@ -36,6 +36,11 @@ const nextConfig: NextConfig = {
         hostname: "illustrations.popsy.co", 
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "um.cen.medialoger.com",
+        pathname: "/storage/**",
+      },
     ],
   },
   webpack(config) {

@@ -10,8 +10,10 @@ import React, {
 
 // ====== TYPE ======
 type RoleContextType = {
+  id: string | null;
   name: string | null;
   role: string | null;
+  setId: (id: string | null) => void;
   setName: (name: string | null) => void;
   setRole: (role: string | null) => void;
   logout: () => void;
@@ -31,38 +33,46 @@ export const useRole = () => {
 
 // ====== PROVIDER ======
 export const RoleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [id, setId] = useState<string | null>(null);
   const [name, setName] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);
 
-  // Load name & role dari localStorage saat pertama kali
+  // Load data dari localStorage saat pertama kali
   useEffect(() => {
+    const storedId = localStorage.getItem("id");
     const storedName = localStorage.getItem("name");
     const storedRole = localStorage.getItem("role");
 
+    if (storedId) setId(storedId);
     if (storedName) setName(storedName);
     if (storedRole) setRole(storedRole);
   }, []);
 
-  // Simpan name & role ke localStorage setiap kali berubah
+  // Simpan ke localStorage setiap kali berubah
   useEffect(() => {
+    if (id) localStorage.setItem("id", id);
+    else localStorage.removeItem("id");
+
     if (name) localStorage.setItem("name", name);
     else localStorage.removeItem("name");
 
     if (role) localStorage.setItem("role", role);
     else localStorage.removeItem("role");
-  }, [name, role]);
+  }, [id, name, role]);
 
-  // Hapus semua data saat logout
+  // Logout
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("role");
+    localStorage.removeItem("id");
     localStorage.removeItem("name");
+    localStorage.removeItem("role");
+    setId(null);
     setName(null);
     setRole(null);
   };
 
   return (
-    <RoleContext.Provider value={{ name, role, setName, setRole, logout }}>
+    <RoleContext.Provider value={{ id, name, role, setId, setName, setRole, logout }}>
       {children}
     </RoleContext.Provider>
   );

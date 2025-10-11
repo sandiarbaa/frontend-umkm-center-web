@@ -69,7 +69,7 @@ export default function BasicTableUmkm({
     }
   };
 
-  const columns = ["Nama", "Alamat", "Status", "Aksi"];
+  const columns = ["Nama", "Alamat", "Aksi"];
 
   return (
     <>
@@ -120,10 +120,6 @@ export default function BasicTableUmkm({
                         {u.address}
                       </TableCell>
 
-                      <TableCell className="px-4 py-3 text-gray-500 text-start capitalize">
-                        {u.status}
-                      </TableCell>
-
                       <TableCell className="px-4 py-3 text-start">
                         <div className="flex items-center gap-3">
                           <button
@@ -172,7 +168,7 @@ export default function BasicTableUmkm({
           Konfirmasi Hapus
         </h4>
         <p className="text-md leading-6 text-gray-500">
-          Apakah kamu yakin ingin menghapus data UMKM ini?
+          Apakah kamu yakin ingin menghapus data ini?
         </p>
         <div className="flex items-center justify-end gap-3 mt-8">
           <Button size="sm" variant="outline" onClick={closeModal}>

@@ -20,7 +20,7 @@ export default function DefaultInputs() {
   const [role, setRole] = useState<string>('')
   const [image, setImage] = useState<File | null>(null)
   const [showPassword, setShowPassword] = useState(false);
-  const [preview, setPreview] = useState<string>(""); // preview foto lama
+  const [preview, setPreview] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false)
   const [errors, setErrors] = useState<{ [key:string]: string }>({})
 
@@ -189,7 +189,7 @@ export default function DefaultInputs() {
         </div>
 
         <div className='flex justify-center md:justify-end gap-x-3'>
-          <Button size="sm" variant="primary" onClick={() => router.push('/user')}>
+          <Button size="sm" variant="outline" onClick={() => router.push('/user')}>
             Back
           </Button>
           <Button size="sm" variant="primary" onClick={handleAddUser}>

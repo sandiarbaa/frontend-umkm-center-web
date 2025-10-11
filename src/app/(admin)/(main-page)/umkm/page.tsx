@@ -53,7 +53,7 @@ export default function UmkmPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold">Daftar UMKM</h1>
+      <h1 className="text-xl font-semibold dark:text-white">Daftar UMKM</h1>
 
       <Button
         size="sm"

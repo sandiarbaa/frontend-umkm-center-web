@@ -247,7 +247,7 @@ export default function DefaultInputsUpdateUmkm() {
 
         {/* User Dropdown */}
         <div>
-          <Label>Pilih User</Label>
+          <Label>Pilih Owner</Label>
           <div className="relative">
             <Select
               options={userOptions}
@@ -306,7 +306,7 @@ export default function DefaultInputsUpdateUmkm() {
 
         {/* Buttons */}
         <div className="flex justify-center md:justify-end gap-x-3">
-          <Button size="sm" variant="primary" onClick={() => router.push("/umkm")}>
+          <Button size="sm" variant="outline" onClick={() => router.push("/umkm")}>
             Back
           </Button>
           <Button size="sm" variant="primary" onClick={handleUpdateUmkm}>

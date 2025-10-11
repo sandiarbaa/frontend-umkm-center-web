@@ -133,7 +133,7 @@ export default function ShowDetailUserPage() {
       <div className="flex justify-end mt-10">
         <Button
           size="sm"
-          variant="primary"
+          variant="outline"
           onClick={() => router.push("/user")}
           className="rounded-full px-5 py-2"
         >

@@ -11,6 +11,7 @@ interface Umkm {
   description: string;
   address: string;
   phone: string;
+  image_url: string;
 }
 
 export default function UmkmList() {
@@ -18,7 +19,7 @@ export default function UmkmList() {
 
   const fetchUmkms = async () => {
     try {
-      const res = await api.get<Umkm[]>("/umkms");
+      const res = await api.get<Umkm[]>("/public/umkms");
       setUmkms(res.data);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -38,11 +39,11 @@ export default function UmkmList() {
             drop-shadow-lg">Daftar UMKM</h2>
 
       {/* Grid Card */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {umkms.map((umkm) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {umkms.length > 0 ? umkms.map((umkm) => (
           <div
             key={umkm.id}
-            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-5 border border-gray-100 flex flex-col"
+            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-5 border border-gray-100 flex flex-col min-w-40"
           >
             {/* Title */}
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -52,7 +53,8 @@ export default function UmkmList() {
             {/* Image */}
             <div className="w-full h-40 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
               <Image
-                src="/images/cards/card-01.jpg"
+                // src="/images/cards/card-01.jpg"
+                src={umkm.image_url ? `${umkm.image_url}` : "/images/cards/card-01.jpg"}
                 alt="UMKM Produk"
                 width={300}
                 height={0}
@@ -78,7 +80,9 @@ export default function UmkmList() {
               </p>
             </div>
           </div>
-        ))}
+        )) : (
+          <p className="text-center col-span-3 text-gray-500">Tidak ada UMKM tersedia.</p>
+        )}
       </div>
     </div>
   );

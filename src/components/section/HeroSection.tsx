@@ -10,7 +10,15 @@ export default function HeroSection() {
         <div className="font-semibold tracking-widest 
         bg-gradient-to-br from-blue-700 to-indigo-900 
             bg-clip-text text-transparent 
-            drop-shadow-lg absolute left-0 top-0 md:static ml-5 md:ml-0">LOGO</div>
+            drop-shadow-lg absolute left-0 top-0 md:static ml-5 md:ml-0">
+              <Image
+                className="dark:hidden"
+                src="/images/logo/portalumkm.png"
+                alt="Logo"
+                width={80}
+                height={0}
+              />
+            </div>
         <Link href={"/signin"} className="absolute right-0 top-0 md:static mr-5 md:mr-5">
           <Button size="sm" variant="outline"
             className="shadow-lg px-6 py-2 rounded-xl font-semibold

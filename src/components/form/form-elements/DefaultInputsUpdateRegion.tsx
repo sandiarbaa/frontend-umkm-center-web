@@ -115,7 +115,7 @@ export default function DefaultInputsUpdateRegion() {
         </div>
 
         <div className="flex justify-center md:justify-end gap-x-3 ">
-          <Button size="sm" variant="primary" onClick={() => router.push("/region")}>
+          <Button size="sm" variant="outline" onClick={() => router.push("/region")}>
             Back
           </Button>
           <Button size="sm" variant="primary" onClick={handleUpdateRegion}>

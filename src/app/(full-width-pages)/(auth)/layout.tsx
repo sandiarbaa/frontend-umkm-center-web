@@ -2,6 +2,8 @@ import GridShape from "@/components/common/GridShape";
 import ThemeTogglerTwo from "@/components/common/ThemeTogglerTwo";
 
 import { ThemeProvider } from "@/context/ThemeContext";
+import Image from "next/image";
+import Link from "next/link";
 // import Image from "next/image";
 // import Link from "next/link";
 import React from "react";
@@ -21,15 +23,15 @@ export default function AuthLayout({
               {/* <!-- ===== Common Grid Shape Start ===== --> */}
               <GridShape />
               <div className="flex flex-col items-center max-w-xs">
-                <h1 className="mb-4 text-3xl font-bold text-white">LOGO</h1>
-                {/* <Link href="/" className="block mb-4">
+                <Link href="/" className="block mb-4">
                   <Image
                     width={231}
-                    height={48}
-                    src="./images/logo/auth-logo.svg"
+                    height={0}
+                    // src="./images/logo/auth-logo.svg"
+                    src="/images/logo/portalumkm.png"
                     alt="Logo"
                   />
-                </Link> */}
+                </Link>
                 <p className="text-center text-gray-400 dark:text-white/60">
                   PORTAL UMKM PARUNG SERAB
                 </p>

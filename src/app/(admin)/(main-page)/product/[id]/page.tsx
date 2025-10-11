@@ -115,7 +115,7 @@ export default function ShowDetailProductPage() {
       <div className="flex justify-end mt-10">
         <Button
           size="sm"
-          variant="primary"
+          variant="outline"
           onClick={() => router.push("/product")}
           className="rounded-full px-5 py-2"
         >

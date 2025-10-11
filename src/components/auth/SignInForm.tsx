@@ -12,7 +12,7 @@ import { useRole } from "@/context/RoleContext";
 
 export default function SignInForm() {
   const router = useRouter()
-  const { setName, setRole } = useRole();
+  const { setId, setName, setRole } = useRole();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -28,16 +28,18 @@ export default function SignInForm() {
       });
 
       // Set untuk context role
+      const userId = res.data.user.id;
       const userName = res.data.user.name;
       const userRole = res.data.user.roles[0];
 
-      // simpan token
-      localStorage.setItem('name', res.data.user.name);
-      localStorage.setItem('token', res.data.token);
+      // simpan token + data user
+      localStorage.setItem("id", userId);
+      localStorage.setItem("name", userName);
+      localStorage.setItem("token", res.data.token);
 
-      // set token ke axios default biar auto kepake
-      api.defaults.headers.common['Authorization'] = `Bearer ${res.data.token}`;
+      api.defaults.headers.common["Authorization"] = `Bearer ${res.data.token}`;
 
+      setId(userId);
       setName(userName);
       setRole(userRole);
 

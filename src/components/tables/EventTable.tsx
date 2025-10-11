@@ -182,7 +182,7 @@ export default function EventTable({
           Konfirmasi Hapus
         </h4>
         <p className="text-md leading-6 text-gray-500 dark:text-gray-400">
-          Apakah kamu yakin ingin menghapus event ini?
+          Apakah kamu yakin ingin menghapus data ini?
         </p>
         <div className="flex items-center justify-end w-full gap-3 mt-8">
           <Button size="sm" variant="outline" onClick={closeModal}>

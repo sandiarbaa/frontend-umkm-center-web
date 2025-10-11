@@ -1,8 +1,8 @@
 
 export default function FooterSection() {
   return (
-    <section className="h-16 px-32 flex justify-between items-center py-10 bg-white">
-      <div>
+    <section className="min-h-16 px-32 flex flex-col md:flex-row gap-y-3 justify-between items-center py-10 bg-white">
+      <div className="text-center md:text-start">
         <h2 className="tracking-widest text-sm">PORTAL UMKM</h2>
         <h1 className="tracking-tight font-semibold text-lg 
                       bg-gradient-to-br from-blue-700 to-indigo-900 

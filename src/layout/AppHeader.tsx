@@ -135,17 +135,17 @@ const AppHeader: React.FC = () => {
 
           <Link href="/" className="lg:hidden">
             <Image
-              width={154}
-              height={32}
+              width={80}
+              height={0}
               className="dark:hidden"
-              src="./images/logo/logo.svg"
+              src="/images/logo/portalumkm.png"
               alt="Logo"
             />
             <Image
-              width={154}
+              width={80}
               height={32}
               className="hidden dark:block"
-              src="./images/logo/logo-dark.svg"
+              src="/images/logo/portalumkm.png"
               alt="Logo"
             />
           </Link>
@@ -170,7 +170,7 @@ const AppHeader: React.FC = () => {
             </svg>
           </button>
 
-          <div className="hidden lg:block">
+          {/* <div className="hidden lg:block">
             <form>
               <div className="relative">
                 <span className="absolute -translate-y-1/2 left-4 top-1/2 pointer-events-none">
@@ -203,7 +203,7 @@ const AppHeader: React.FC = () => {
                 </button>
               </div>
             </form>
-          </div>
+          </div> */}
         </div>
         <div
           className={`${
@@ -212,7 +212,7 @@ const AppHeader: React.FC = () => {
         >
           <div className="flex items-center gap-2 2xsm:gap-3">
             {/* <!-- Dark Mode Toggler --> */}
-            <ThemeToggleButton />
+            {/* <ThemeToggleButton /> */}
             {/* <!-- Dark Mode Toggler --> */}
 
            {/* <NotificationDropdown />  */}

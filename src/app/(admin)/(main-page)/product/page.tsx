@@ -51,7 +51,7 @@ export default function ProductPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold mb-4">Product Page</h1>
+      <h1 className="text-xl font-semibold mb-4 dark:text-white">Product Page</h1>
 
       <Button
         size="sm"
