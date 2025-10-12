@@ -42,7 +42,7 @@ export default function EventList() {
       <h2 className="text-2xl font-bold mb-12 text-center bg-gradient-to-br from-blue-700 to-indigo-900 
             bg-clip-text text-transparent 
             drop-shadow-lg">
-        Daftar Event
+        Daftar Acara
       </h2>
 
       {/* Grid Card */}
@@ -88,7 +88,7 @@ export default function EventList() {
             </div>
           </div>
         )) : (
-          <p className="text-center col-span-3 text-gray-500">Tidak ada Event tersedia.</p>
+          <p className="text-center col-span-3 text-gray-500">Tidak ada Acara tersedia.</p>
         )}
       </div>
     </div>

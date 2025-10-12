@@ -24,8 +24,8 @@ type NavItem = {
 const navItemsAdmin: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "Region",
-    subItems: [{ name: "Kelola Region", path: "/region", pro: false }],
+    name: "Wilayah",
+    subItems: [{ name: "Kelola Wilayah", path: "/region", pro: false }],
   },
   {
     icon: <GridIcon />,
@@ -39,8 +39,8 @@ const navItemsAdmin: NavItem[] = [
   },
   {
     icon: <GridIcon />,
-    name: "Event",
-    subItems: [{ name: "Kelola Event", path: "/event", pro: false }],
+    name: "Acara",
+    subItems: [{ name: "Kelola Acara", path: "/event", pro: false }],
   },
   
 ];
@@ -53,8 +53,8 @@ const navItemsOwner: NavItem[] = [
   },
   {
     icon: <GridIcon />,
-    name: "Product",
-    subItems: [{ name: "Kelola Product", path: "/product", pro: false }],
+    name: "Produk",
+    subItems: [{ name: "Kelola Produk", path: "/product", pro: false }],
   },
 ];
 
@@ -376,25 +376,8 @@ const AppSidebar: React.FC = () => {
               {renderMenuItems(menuToRender, "main")}
             </div>
 
-            {/* <div className="">
-              <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
-              >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
-                ) : (
-                  <HorizontaLDots />
-                )}
-              </h2>
-              {renderMenuItems(othersItems, "others")}
-            </div> */}
           </div>
         </nav>
-        {/* {isExpanded || isHovered || isMobileOpen ? <SidebarWidget /> : null} */}
       </div>
     </aside>
   );

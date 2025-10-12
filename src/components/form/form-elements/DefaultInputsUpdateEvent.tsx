@@ -147,14 +147,14 @@ export default function DefaultInputsUpdateEvent() {
 
   // ===== UI =====
   return (
-    <ComponentCard title="Form Update Event">
+    <ComponentCard title="Form Ubah Acara">
       <div className="space-y-6">
         {/* Judul */}
         <div>
-          <Label>Judul Event</Label>
+          <Label>Judul Acara</Label>
           <Input
             type="text"
-            placeholder="Masukkan judul event"
+            placeholder="Masukkan judul acara"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -165,7 +165,7 @@ export default function DefaultInputsUpdateEvent() {
         <div>
           <Label>Deskripsi</Label>
           <TextArea
-            placeholder="Masukkan deskripsi event"
+            placeholder="Masukkan deskripsi acara"
             value={description}
             onChange={(val) => setDescription(val)}
           />
@@ -177,7 +177,7 @@ export default function DefaultInputsUpdateEvent() {
           <Label>Tempat</Label>
           <Input
             type="text"
-            placeholder="Lokasi event"
+            placeholder="Lokasi acara"
             value={places}
             onChange={(e) => setPlaces(e.target.value)}
           />
@@ -189,8 +189,8 @@ export default function DefaultInputsUpdateEvent() {
           <div>
             <DatePicker
               id="event-date"
-              label="Tanggal Event"
-              placeholder="Pilih tanggal event"
+              label="Tanggal Acara"
+              placeholder="Pilih tanggal acara"
               defaultDate={eventDate}
               onChange={(dates, currentDateString) => setEventDate(currentDateString)}
             />
@@ -232,7 +232,7 @@ export default function DefaultInputsUpdateEvent() {
 
           {preview && (
             <div className="mb-3 mt-5 md:mt-0 mx-auto">
-              <Label className="text-center">Current Image</Label>
+              <Label className="text-center">Gambar Pratinjau</Label>
               <Image
                 src={preview}
                 alt="Preview"
@@ -247,7 +247,7 @@ export default function DefaultInputsUpdateEvent() {
         {/* Tombol */}
         <div className="flex justify-center md:justify-end gap-x-3 mt-6">
           <Button size="sm" variant="outline" onClick={() => router.push("/event")}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleUpdateEvent}>
             {loading ? (
@@ -275,7 +275,7 @@ export default function DefaultInputsUpdateEvent() {
                 Loading...
               </>
             ) : (
-              "Update Event"
+              "Ubah Acara"
             )}
           </Button>
         </div>

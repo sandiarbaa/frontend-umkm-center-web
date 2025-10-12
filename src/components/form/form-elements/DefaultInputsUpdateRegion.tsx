@@ -101,14 +101,14 @@ export default function DefaultInputsUpdateRegion() {
   }
 
   return (
-    <ComponentCard title="Form Update Region">
+    <ComponentCard title="Form Ubah Wilayah">
       <div className="space-y-6">
         <div>
-          <Label>Name</Label>
+          <Label>Nama</Label>
           <Input
             type="text"
             value={name}
-            placeholder="region name"
+            placeholder="nama wilayah"
             onChange={(e) => setName(e.target.value)}
           />
           {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
@@ -116,7 +116,7 @@ export default function DefaultInputsUpdateRegion() {
 
         <div className="flex justify-center md:justify-end gap-x-3 ">
           <Button size="sm" variant="outline" onClick={() => router.push("/region")}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleUpdateRegion}>
             {loading ? (
@@ -144,7 +144,7 @@ export default function DefaultInputsUpdateRegion() {
                 Loading...
               </>
             ) : (
-              "Update Region"
+              "Ubah Wilayah"
             )}
           </Button>
         </div>

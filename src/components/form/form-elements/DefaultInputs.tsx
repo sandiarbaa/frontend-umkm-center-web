@@ -108,11 +108,11 @@ export default function DefaultInputs() {
   };
 
   return (
-    <ComponentCard title="Form Add User">
+    <ComponentCard title="Form Tambah User">
       <div className="space-y-6">
         <div>
-          <Label>Name</Label>
-          <Input type="text" placeholder='yourname' onChange={(e) => setName(e.target.value)} />
+          <Label>Nama</Label>
+          <Input type="text" placeholder='nama' onChange={(e) => setName(e.target.value)} />
           {errors.name && (
             <p className="mt-1 text-sm text-red-500">{errors.name}</p>
           )}
@@ -130,7 +130,7 @@ export default function DefaultInputs() {
           <div className="relative">
             <Input
               type={showPassword ? "text" : "password"}
-              placeholder="Enter your password"
+              placeholder="masukan password"
               onChange={(e) => setPassword(e.target.value)}
             />
             <button
@@ -149,11 +149,11 @@ export default function DefaultInputs() {
           )}
         </div>
         <div>
-          <Label>Select Role</Label>
+          <Label>Pilih Role</Label>
           <div className="relative">
             <Select
             options={options}
-            placeholder="Select an option"
+            placeholder="pilih role user"
             onChange={handleSelectChange}
             className="dark:bg-dark-900"
           />
@@ -176,7 +176,7 @@ export default function DefaultInputs() {
 
             {preview && (
               <div className="mb-3 mt-5 md:mt-0 mx-auto">
-                <Label className='text-center'>Preview Image</Label>
+                <Label className='text-center'>Gambar Pratinjau</Label>
                 <Image
                   src={preview}
                   alt="Preview"
@@ -190,7 +190,7 @@ export default function DefaultInputs() {
 
         <div className='flex justify-center md:justify-end gap-x-3'>
           <Button size="sm" variant="outline" onClick={() => router.push('/user')}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleAddUser}>
             {loading ? (
@@ -218,7 +218,7 @@ export default function DefaultInputs() {
                 Loading...
               </>
             ) : (
-              "Add User"
+              "Tambah User"
             )}
           </Button>
         </div>

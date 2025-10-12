@@ -176,14 +176,14 @@ export default function ShowDetailUmkmPage() {
           </div>
 
           <div>
-            <Label>Region</Label>
+            <Label>Wilayah</Label>
             <p className="text-base font-semibold text-gray-800 dark:text-gray-100 mt-1">
               {region?.name ?? "-"}
             </p>
           </div>
 
           <div>
-            <Label>User Pemilik</Label>
+            <Label>Owner</Label>
             <p className="text-base font-semibold text-gray-800 dark:text-gray-100 mt-1">
               {user?.name ?? "-"}
             </p>

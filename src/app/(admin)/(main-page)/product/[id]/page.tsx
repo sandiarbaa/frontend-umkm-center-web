@@ -119,7 +119,7 @@ export default function ShowDetailProductPage() {
           onClick={() => router.push("/product")}
           className="rounded-full px-5 py-2"
         >
-          Back
+          Kembali
         </Button>
       </div>
     </ComponentCard>

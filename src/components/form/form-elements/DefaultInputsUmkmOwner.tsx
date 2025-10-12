@@ -102,7 +102,7 @@ export default function DefaultInputsUmkmOwner() {
   };
 
   return (
-    <ComponentCard title="Form Add UMKM">
+    <ComponentCard title="Form Tambah UMKM">
       <div className="space-y-6">
         {/* Name */}
         <div>
@@ -155,11 +155,11 @@ export default function DefaultInputsUmkmOwner() {
 
         {/* Region Dropdown */}
         <div>
-          <Label>Pilih Region</Label>
+          <Label>Pilih Wilayah</Label>
           <div className="relative">
             <Select
               options={regionOptions}
-              placeholder="Pilih region"
+              placeholder="Pilih Wilayah"
               onChange={(val: string) => setRegionId(Number(val))}
             />
             <span className="absolute text-gray-500 -translate-y-1/2 pointer-events-none right-3 top-1/2 dark:text-gray-400">
@@ -182,7 +182,7 @@ export default function DefaultInputsUmkmOwner() {
 
           {preview && (
             <div className="mb-3 mt-5 md:mt-0 mx-auto">
-              <Label className="text-center">Preview Image</Label>
+              <Label className="text-center">Gambar Pratinjau</Label>
               <Image
                 src={preview}
                 alt="Preview"
@@ -197,7 +197,7 @@ export default function DefaultInputsUmkmOwner() {
         {/* Buttons */}
         <div className="flex justify-center md:justify-end gap-x-3">
           <Button size="sm" variant="outline" onClick={() => router.push("/umkm")}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleAddUmkm}>
             {loading ? (
@@ -225,7 +225,7 @@ export default function DefaultInputsUmkmOwner() {
                 Loading...
               </>
             ) : (
-              "Add UMKM"
+              "Tambah UMKM"
             )}
           </Button>
         </div>

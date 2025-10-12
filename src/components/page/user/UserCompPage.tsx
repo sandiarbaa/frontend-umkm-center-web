@@ -50,10 +50,10 @@ export default function UserCompPage() {
   
   return (
     <div>
-      <h1>User Page</h1>
+      <h1>Daftar User</h1>
 
       <Button size="sm" variant="primary" onClick={() => router.push('/user/add-user')} className="my-5">
-        Add User
+        Tambah User
       </Button>
 
       {showAlert && (

@@ -59,7 +59,7 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
     fetchUsers()
   }, [])
   
-  const columns = ['Name', 'Email', 'Action'];
+  const columns = ['Nama', 'Email', 'Aksi'];
   
   const handleDeleteUser = async () => {
     if (!selectedId) return;
@@ -162,7 +162,7 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                 ) : (
                   <TableRow>
                     <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                      No Data.
+                      Tidak ada data.
                     </TableCell>
                   </TableRow>
                 )}

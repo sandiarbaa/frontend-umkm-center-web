@@ -140,14 +140,14 @@ export default function DefaultInputsUpdateUser() {
   }
 
   return (
-    <ComponentCard title="Form Update User">
+    <ComponentCard title="Form Ubah User">
       <div className="space-y-6">
         <div>
-          <Label>Name</Label>
+          <Label>Nama</Label>
           <Input
             type="text"
             value={name}
-            placeholder="yourname"
+            placeholder="nama"
             onChange={(e) => setName(e.target.value)}
           />
           {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
@@ -186,11 +186,11 @@ export default function DefaultInputsUpdateUser() {
         </div>
 
         <div>
-          <Label>Select Role</Label>
+          <Label>Pilih Role</Label>
           <div className="relative">
             <Select
               options={options}
-              placeholder="Select an option"
+              placeholder="Pilih role user"
               onChange={handleSelectChange}
               value={role}
               className="dark:bg-dark-900"
@@ -212,7 +212,7 @@ export default function DefaultInputsUpdateUser() {
           
           {preview && (
             <div className="mb-3 mt-5 md:mt-0 mx-auto">
-              <Label className='text-center'>Current Image</Label>
+              <Label className='text-center'>Gambar Pratinjau</Label>
               <Image
                 src={preview}
                 alt="Preview"
@@ -227,7 +227,7 @@ export default function DefaultInputsUpdateUser() {
 
         <div className="flex justify-center md:justify-end gap-x-3 ">
           <Button size="sm" variant="outline" onClick={() => router.push("/user")}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleUpdateUser}>
             {loading ? (
@@ -255,7 +255,7 @@ export default function DefaultInputsUpdateUser() {
                 Loading...
               </>
             ) : (
-              "Update User"
+              "Ubah User"
             )}
           </Button>
         </div>

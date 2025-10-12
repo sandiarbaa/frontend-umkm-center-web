@@ -156,7 +156,7 @@ export default function DefaultInputsUpdateProduct() {
 
   // ===== UI =====
   return (
-    <ComponentCard title="Form Update Product">
+    <ComponentCard title="Form Ubah Produk">
       <div className="space-y-6">
         {/* UMKM */}
         <div>
@@ -227,7 +227,7 @@ export default function DefaultInputsUpdateProduct() {
 
           {preview && (
             <div className="mb-3 mt-5 md:mt-0 mx-auto">
-              <Label className="text-center">Current Image</Label>
+              <Label className="text-center">Gambar Pratinjau</Label>
               <Image
                 src={preview}
                 alt="Preview"
@@ -242,7 +242,7 @@ export default function DefaultInputsUpdateProduct() {
         {/* Tombol */}
         <div className="flex justify-center md:justify-end gap-x-3 mt-6">
           <Button size="sm" variant="outline" onClick={() => router.push("/product")}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleUpdateProduct}>
             {loading ? (
@@ -270,7 +270,7 @@ export default function DefaultInputsUpdateProduct() {
                 Loading...
               </>
             ) : (
-              "Update Product"
+              "Ubah Produk"
             )}
           </Button>
         </div>

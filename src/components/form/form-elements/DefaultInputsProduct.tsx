@@ -101,7 +101,7 @@ export default function DefaultInputsProduct() {
 
   // ===== UI =====
   return (
-    <ComponentCard title="Form Add Product">
+    <ComponentCard title="Form Tambah Produk">
       <div className="space-y-6">
         {/* UMKM */}
         <div>
@@ -171,7 +171,7 @@ export default function DefaultInputsProduct() {
 
           {preview && (
             <div className="mb-3 mt-5 md:mt-0 mx-auto">
-              <Label className="text-center">Preview Gambar</Label>
+              <Label className="text-center">Gambar Pratinjau</Label>
               <Image
                 src={preview}
                 alt="Preview"
@@ -186,7 +186,7 @@ export default function DefaultInputsProduct() {
         {/* Tombol */}
         <div className="flex justify-center md:justify-end gap-x-3 mt-6">
           <Button size="sm" variant="outline" onClick={() => router.push("/product")}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleAddProduct}>
             {loading ? (
@@ -214,7 +214,7 @@ export default function DefaultInputsProduct() {
                 Loading...
               </>
             ) : (
-              "Add Product"
+              "Tambah Produk"
             )}
           </Button>
         </div>

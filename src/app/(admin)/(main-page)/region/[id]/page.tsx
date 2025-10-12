@@ -78,7 +78,7 @@ export default function ShowDetailRegionPage() {
   }
 
   return (
-    <ComponentCard title={`Detail Region`}>
+    <ComponentCard title={`Detail Wilayah`}>
       <div className="flex flex-col md:flex-row md:items-start md:justify-start md:gap-8 lg:gap-12">
         {/* Informasi User */}
         <div className="flex-col mt-6 md:mt-0 space-y-5 w-[500px]">
@@ -99,7 +99,7 @@ export default function ShowDetailRegionPage() {
           onClick={() => router.push("/region")}
           className="rounded-full px-5 py-2"
         >
-          Back
+          Kembali
         </Button>
       </div>
     </ComponentCard>

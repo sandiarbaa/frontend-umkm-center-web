@@ -137,7 +137,7 @@ export default function ShowDetailUserPage() {
           onClick={() => router.push("/user")}
           className="rounded-full px-5 py-2"
         >
-          Back
+          Kembali
         </Button>
       </div>
     </ComponentCard>

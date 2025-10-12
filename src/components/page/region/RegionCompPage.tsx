@@ -50,10 +50,10 @@ export default function RegionCompPage() {
   
   return (
     <div>
-      <h1>Region Page</h1>
+      <h1>Daftar Wilayah</h1>
 
       <Button size="sm" variant="primary" onClick={() => router.push('/region/add-region')} className="my-5">
-        Add Region
+        Tambah Wilayah
       </Button>
 
       {showAlert && (

@@ -61,7 +61,7 @@ export default function ShowDetailEventPage() {
     );
 
   return (
-    <ComponentCard title={`Detail Event`}>
+    <ComponentCard title={`Detail Acara`}>
       <div className="flex flex-col md:flex-row gap-8">
         <div>
           <Image
@@ -74,7 +74,7 @@ export default function ShowDetailEventPage() {
         </div>
         <div className="space-y-4 w-[500px]">
           <div>
-            <Label>Judul Event</Label>
+            <Label>Judul Acara</Label>
             <p className="font-semibold mt-1">{event.title}</p>
           </div>
 
@@ -91,7 +91,7 @@ export default function ShowDetailEventPage() {
           </div>
 
           <div>
-            <Label>Tanggal Event</Label>
+            <Label>Tanggal Acara</Label>
             <p className="font-semibold mt-1">{event.event_date || "-"}</p>
           </div>
 

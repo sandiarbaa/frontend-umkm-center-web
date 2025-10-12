@@ -53,11 +53,11 @@ export default function DefaultInputsRegion() {
   };
 
   return (
-    <ComponentCard title="Form Add User">
+    <ComponentCard title="Form Tambah Wilayah">
       <div className="space-y-6">
         <div>
-          <Label>Name</Label>
-          <Input type="text" placeholder='region name' onChange={(e) => setName(e.target.value)} />
+          <Label>Nama</Label>
+          <Input type="text" placeholder='nama wilayah' onChange={(e) => setName(e.target.value)} />
           {errors.name && (
             <p className="mt-1 text-sm text-red-500">{errors.name}</p>
           )}
@@ -65,7 +65,7 @@ export default function DefaultInputsRegion() {
 
         <div className='flex justify-center md:justify-end gap-x-3'>
           <Button size="sm" variant="outline" onClick={() => router.push('/region')}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleAddRegion}>
             {loading ? (
@@ -93,7 +93,7 @@ export default function DefaultInputsRegion() {
                 Loading...
               </>
             ) : (
-              "Add Region"
+              "Tambah Wilayah"
             )}
           </Button>
         </div>

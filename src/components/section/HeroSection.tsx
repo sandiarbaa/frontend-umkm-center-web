@@ -47,6 +47,7 @@ export default function HeroSection() {
           <p className="mt-5 text-lg 2xl:text-2xl text-gray-400 px-14 md:px-0">Selamat datang di portal resmi UMKM Kelurahan Parung Serab.
               Di sini kamu bisa menemukan informasi seputar berbagai usaha mikro, kecil, dan menengah beserta produk unggulannya.
               Kami juga menyediakan update mengenai event serta kegiatan terbaru yang berlangsung di Kelurahan Parung Serab.</p>
+          <a href="#umkm">
           <Button size="sm" variant="outline" 
             className="mt-5 px-6 py-3 rounded-xl font-semibold shadow-lg 
             bg-gradient-to-br from-blue-700 to-indigo-900
@@ -55,6 +56,7 @@ export default function HeroSection() {
           >
             Jelajahi UMKM
           </Button>
+          </a>
         </div>
 
         <div className="order-1 md:order-2">

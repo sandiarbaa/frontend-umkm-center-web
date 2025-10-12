@@ -53,7 +53,7 @@ export default function EventCompPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-bold mb-5">Event Page</h1>
+      <h1 className="text-xl font-bold mb-5">Daftar Acara</h1>
 
       <Button
         size="sm"
@@ -61,7 +61,7 @@ export default function EventCompPage() {
         onClick={() => router.push("/event/add-event")}
         className="my-5"
       >
-        Add Event
+        Tambah Acara
       </Button>
 
       {showAlert && (

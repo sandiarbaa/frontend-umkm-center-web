@@ -92,14 +92,14 @@ export default function DefaultInputsEvent() {
   };
 
   return (
-    <ComponentCard title="Form Tambah Event">
+    <ComponentCard title="Form Tambah Acara">
       <div className="space-y-6">
         {/* Judul */}
         <div>
-          <Label>Judul Event</Label>
+          <Label>Judul Acara</Label>
           <Input
             type="text"
-            placeholder="Masukkan judul event"
+            placeholder="Masukkan judul acara"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -112,7 +112,7 @@ export default function DefaultInputsEvent() {
         <div>
           <Label>Deskripsi</Label>
           <TextArea
-            placeholder="Masukkan deskripsi event"
+            placeholder="Masukkan deskripsi acara"
             value={description}
             onChange={(val) => setDescription(val)}
           />
@@ -127,7 +127,7 @@ export default function DefaultInputsEvent() {
           <Label>Tempat</Label>
           <Input
             type="text"
-            placeholder="Lokasi event"
+            placeholder="Lokasi Acara"
             value={places}
             onChange={(e) => setPlaces(e.target.value)}
           />
@@ -142,8 +142,8 @@ export default function DefaultInputsEvent() {
           <div>
             <DatePicker
               id="event-date"
-              label="Tanggal Event"
-              placeholder="Pilih tanggal event"
+              label="Tanggal Acara"
+              placeholder="Pilih tanggal acara"
               onChange={(dates, currentDateString) => {
                 setEventDate(currentDateString);
               }}
@@ -191,7 +191,7 @@ export default function DefaultInputsEvent() {
         {/* Upload Gambar */}
         <div className="flex flex-col items-center justify-center md:flex-row md:justify-start gap-x-10">
           <FileInputExample
-            title="Gambar Event"
+            title="Gambar Acara"
             setter={setImage}
             setPreview={setPreview}
             error={errors.image}
@@ -199,7 +199,7 @@ export default function DefaultInputsEvent() {
 
           {preview && (
             <div className="mb-3 mt-5 md:mt-0 mx-auto">
-              <Label className="text-center">Preview Gambar</Label>
+              <Label className="text-center">Gambar Pratinjau</Label>
               <Image
                 src={preview}
                 alt="Preview"
@@ -214,7 +214,7 @@ export default function DefaultInputsEvent() {
         {/* Tombol */}
         <div className="flex justify-center md:justify-end gap-x-3 mt-6">
           <Button size="sm" variant="outline" onClick={() => router.push("/event")}>
-            Back
+            Kembali
           </Button>
           <Button size="sm" variant="primary" onClick={handleAddEvent}>
             {loading ? (
@@ -242,7 +242,7 @@ export default function DefaultInputsEvent() {
                 Loading...
               </>
             ) : (
-              "Add Event"
+              "Tambah Acara"
             )}
           </Button>
         </div>

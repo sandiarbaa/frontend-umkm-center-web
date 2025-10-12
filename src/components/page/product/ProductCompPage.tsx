@@ -51,7 +51,7 @@ export default function ProductCompPage() {
 
   return (
     <div>
-      <h1 className="text-xl font-semibold mb-4 dark:text-white">Product Page</h1>
+      <h1 className="text-xl font-semibold mb-4 dark:text-white">Daftar Produk</h1>
 
       <Button
         size="sm"
@@ -59,7 +59,7 @@ export default function ProductCompPage() {
         onClick={() => router.push("/product/add-product")}
         className="my-5"
       >
-        Add Product
+        Tambah Produk
       </Button>
 
       {showAlert && (

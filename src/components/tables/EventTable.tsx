@@ -69,7 +69,7 @@ export default function EventTable({
     }
   };
 
-  const columns = ["Title", "Tempat", "Tanggal", "Action"];
+  const columns = ["Judul", "Tempat", "Tanggal", "Aksi"];
 
   return (
     <>
@@ -162,7 +162,7 @@ export default function EventTable({
                 ) : (
                   <TableRow>
                     <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
-                      No data.
+                      Tidak ada data.
                     </TableCell>
                   </TableRow>
                 )}

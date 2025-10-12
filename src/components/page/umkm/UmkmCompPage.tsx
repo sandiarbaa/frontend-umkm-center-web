@@ -61,7 +61,7 @@ export default function UmkmCompPage() {
         onClick={() => router.push("/umkm/add-umkm")}
         className="my-5"
       >
-        Add UMKM
+        Tambah UMKM
       </Button>
 
       {showAlert && (
