@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import api from "../../../lib/api";
 import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
+import Link from "next/link";
 
 interface Umkm {
   id: number;
@@ -14,13 +15,27 @@ interface Umkm {
   image_url: string;
 }
 
+// interface Meta {
+//   current_page: number;
+//   last_page: number;
+//   per_page: number;
+//   total: number;
+// }
+
+// interface ApiResponse {
+//   data: Umkm[];
+//   meta: Meta;
+// }
+
 export default function UmkmList() {
   const [umkms, setUmkms] = useState<Umkm[]>([]);
+  // const [meta, setMeta] = useState<Meta | null>(null);
 
   const fetchUmkms = async () => {
     try {
       const res = await api.get<Umkm[]>("/public/umkms");
       setUmkms(res.data);
+      // setMeta(res.data.meta);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log("error: ", error);
@@ -39,11 +54,12 @@ export default function UmkmList() {
             drop-shadow-lg">Daftar UMKM</h2>
 
       {/* Grid Card */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="flex flex-col justify-center items-center md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {umkms.length > 0 ? umkms.map((umkm) => (
-          <div
+          <Link
+            href={`/welcome/umkm/${umkm.id}`}
             key={umkm.id}
-            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-5 border border-gray-100 flex flex-col min-w-40"
+            className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-5 border border-gray-100 flex flex-col min-w-80"
           >
             {/* Title */}
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -79,7 +95,7 @@ export default function UmkmList() {
                 {umkm.phone}
               </p>
             </div>
-          </div>
+          </Link>
         )) : (
           <p className="text-center col-span-3 text-gray-500">Tidak ada UMKM tersedia.</p>
         )}

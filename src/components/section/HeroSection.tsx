@@ -7,18 +7,15 @@ export default function HeroSection() {
     <section className="min-h-screen flex flex-col justify-center relative bg-white px-32">
       {/* Navbar */}
       <div className="flex justify-between items-center mb-10 mt-5 absolute top-0 left-0 w-full px-32">
-        <div className="font-semibold tracking-widest 
-        bg-gradient-to-br from-blue-700 to-indigo-900 
-            bg-clip-text text-transparent 
-            drop-shadow-lg absolute left-0 top-0 md:static ml-5 md:ml-0">
-              <Image
-                className="dark:hidden"
-                src="/images/logo/portalumkm.png"
-                alt="Logo"
-                width={80}
-                height={0}
-              />
-            </div>
+        <div className="absolute left-0 -top-5 md:static ml-5 md:ml-0">
+          <Image
+            className="dark:hidden"
+            src="/images/logo/portalumkm.png"
+            alt="Logo"
+            width={100}
+            height={0}
+          />
+        </div>
         <Link href={"/signin"} className="absolute right-0 top-0 md:static mr-5 md:mr-5">
           <Button size="sm" variant="outline"
             className="shadow-lg px-6 py-2 rounded-xl font-semibold

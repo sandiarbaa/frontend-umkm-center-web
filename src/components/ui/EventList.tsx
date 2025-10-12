@@ -29,7 +29,7 @@ export default function EventList() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Error fetching events:", error);
-      setEvents([]); // fallback ke array kosong
+      setEvents([]);
     }
   };
 
@@ -46,7 +46,7 @@ export default function EventList() {
       </h2>
 
       {/* Grid Card */}
-      <div className="space-y-6 grid grid-cols-1 md:grid-cols-2 gap-x-10">
+      <div className="flex flex-col min-w-80 space-y-6 md:grid md:grid-cols-2 gap-x-10">
         {events.length > 0 ? events.map((event) => (
           <div
             key={event.id}
