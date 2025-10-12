@@ -309,7 +309,7 @@ export default function DefaultInputsUpdateUmkm() {
           <Button size="sm" variant="outline" onClick={() => router.push("/umkm")}>
             Kembali
           </Button>
-          <Button size="sm" variant="primary" onClick={handleUpdateUmkm}>
+          <Button size="sm" variant="primary" onClick={handleUpdateUmkm} disabled={loading}>
             {loading ? (
               <>
                 <svg

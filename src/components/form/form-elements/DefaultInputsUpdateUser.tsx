@@ -229,7 +229,7 @@ export default function DefaultInputsUpdateUser() {
           <Button size="sm" variant="outline" onClick={() => router.push("/user")}>
             Kembali
           </Button>
-          <Button size="sm" variant="primary" onClick={handleUpdateUser}>
+          <Button size="sm" variant="primary" onClick={handleUpdateUser} disabled={loading}>
             {loading ? (
               <>
                 <svg

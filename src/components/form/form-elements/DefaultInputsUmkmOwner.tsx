@@ -199,7 +199,7 @@ export default function DefaultInputsUmkmOwner() {
           <Button size="sm" variant="outline" onClick={() => router.push("/umkm")}>
             Kembali
           </Button>
-          <Button size="sm" variant="primary" onClick={handleAddUmkm}>
+          <Button size="sm" variant="primary" onClick={handleAddUmkm} disabled={loading}>
             {loading ? (
               <>
                 <svg

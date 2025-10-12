@@ -67,7 +67,7 @@ export default function DefaultInputsRegion() {
           <Button size="sm" variant="outline" onClick={() => router.push('/region')}>
             Kembali
           </Button>
-          <Button size="sm" variant="primary" onClick={handleAddRegion}>
+          <Button size="sm" variant="primary" onClick={handleAddRegion} disabled={loading}>
             {loading ? (
               <>
                 <svg

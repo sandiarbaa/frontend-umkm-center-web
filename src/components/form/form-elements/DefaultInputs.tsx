@@ -192,7 +192,7 @@ export default function DefaultInputs() {
           <Button size="sm" variant="outline" onClick={() => router.push('/user')}>
             Kembali
           </Button>
-          <Button size="sm" variant="primary" onClick={handleAddUser}>
+          <Button size="sm" variant="primary" onClick={handleAddUser} disabled={loading}>
             {loading ? (
               <>
                 <svg

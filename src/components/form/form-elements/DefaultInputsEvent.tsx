@@ -216,7 +216,7 @@ export default function DefaultInputsEvent() {
           <Button size="sm" variant="outline" onClick={() => router.push("/event")}>
             Kembali
           </Button>
-          <Button size="sm" variant="primary" onClick={handleAddEvent}>
+          <Button size="sm" variant="primary" onClick={handleAddEvent} disabled={loading}>
             {loading ? (
               <>
                 <svg

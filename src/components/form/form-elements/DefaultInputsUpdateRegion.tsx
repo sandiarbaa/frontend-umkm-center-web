@@ -118,7 +118,7 @@ export default function DefaultInputsUpdateRegion() {
           <Button size="sm" variant="outline" onClick={() => router.push("/region")}>
             Kembali
           </Button>
-          <Button size="sm" variant="primary" onClick={handleUpdateRegion}>
+          <Button size="sm" variant="primary" onClick={handleUpdateRegion} disabled={loading}>
             {loading ? (
               <>
                 <svg

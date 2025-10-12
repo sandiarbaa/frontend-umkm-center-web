@@ -188,7 +188,7 @@ export default function DefaultInputsProduct() {
           <Button size="sm" variant="outline" onClick={() => router.push("/product")}>
             Kembali
           </Button>
-          <Button size="sm" variant="primary" onClick={handleAddProduct}>
+          <Button size="sm" variant="primary" onClick={handleAddProduct} disabled={loading}>
             {loading ? (
               <>
                 <svg
