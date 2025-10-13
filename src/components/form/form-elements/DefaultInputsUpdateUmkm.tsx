@@ -208,7 +208,7 @@ export default function DefaultInputsUpdateUmkm() {
         <div>
           <Label>Deskripsi</Label>
           <textarea
-            className="w-full border rounded-md p-3 dark:bg-dark-900 dark:text-white"
+            className="w-full border rounded-md p-3 dark:bg-dark-900 dark:text-white text-black placeholder:text-gray-400"
             rows={4}
             value={description}
             placeholder="Masukkan deskripsi UMKM"

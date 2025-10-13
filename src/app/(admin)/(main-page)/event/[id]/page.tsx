@@ -115,7 +115,7 @@ export default function ShowDetailEventPage() {
           onClick={() => router.push("/event")}
           className="rounded-full px-5 py-2"
         >
-          Back
+          Kembali
         </Button>
       </div>
     </ComponentCard>

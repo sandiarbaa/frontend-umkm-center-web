@@ -199,7 +199,7 @@ export default function ShowDetailUmkmPage() {
           onClick={() => router.push("/umkm")}
           className="rounded-full px-5 py-2"
         >
-          Back
+          Kembali
         </Button>
       </div>
     </ComponentCard>

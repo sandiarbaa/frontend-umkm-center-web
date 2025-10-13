@@ -139,6 +139,7 @@ export default function DefaultInputsProduct() {
             placeholder="Masukkan deskripsi produk (opsional)"
             value={description}
             onChange={(val) => setDescription(val)}
+            className="text-black placeholder:text-gray-400"
           />
           {errors.description && (
             <p className="mt-1 text-sm text-red-500">{errors.description}</p>
