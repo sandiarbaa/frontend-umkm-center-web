@@ -30,13 +30,13 @@ export default function DefaultInputsProduct() {
     const fetchUmkms = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await api.get("/umkms", {
+        const res = await api.get("/umkms/dropdown", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const options = res.data.map((u: any) => ({
+        const options = res.data.data.map((u: any) => ({
           value: u.id.toString(),
           label: u.name,
         }));

@@ -16,7 +16,7 @@ import api from "../../../lib/api";
 import { Modal } from "../ui/modal";
 import Button from "../ui/button/Button";
 import { useModal } from "@/hooks/useModal";
-// import Image from "next/image";
+import Pagination from "../tables/Pagination";
 
 interface Role {
   id: number;
@@ -25,6 +25,7 @@ interface Role {
   created_at: string;
   updated_at: string;
 }
+
 interface User {
   id: number;
   name: string;
@@ -32,59 +33,95 @@ interface User {
   image_url: string;
   created_at: string;
   updated_at: string;
-  roles : Role[];
+  roles: Role[];
 }
 
-export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: () => void }) {
-  const router = useRouter()
-  const { isOpen, openModal, closeModal } = useModal();
-  const [users, setUsers] = useState<User[] | []>([])
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+interface ApiResponse {
+  data: User[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
 
-  const fetchUsers = async () => {
+export default function UserList({
+  onDeleteSuccess,
+}: {
+  onDeleteSuccess: () => void;
+}) {
+  const router = useRouter();
+  const { isOpen, openModal, closeModal } = useModal();
+
+  const [users, setUsers] = useState<User[]>([]);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
+  const fetchUsers = async (page = 1) => {
     try {
-      const token = localStorage.getItem('token');
-      const res = await api.get('/users', {
+      setLoading(true);
+      const token = localStorage.getItem("token");
+      const res = await api.get<ApiResponse>(`/users?page=${page}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      setUsers(res.data)
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const responseData = Array.isArray(res.data)
+        ? res.data
+        : Array.isArray(res.data.data)
+        ? res.data.data
+        : [];
+
+      setUsers(responseData);
+      setCurrentPage(res.data.current_page ?? 1);
+      setTotalPages(res.data.last_page ?? 1);
     } catch (error) {
-      console.log('Error: ', error);
+      console.log("Error fetching users:", error);
+      setUsers([]);
+    } finally {
+      setLoading(false);
     }
-  }
-  
+  };
+
   useEffect(() => {
-    fetchUsers()
-  }, [])
-  
-  const columns = ['Nama', 'Email', 'Aksi'];
-  
+    fetchUsers(currentPage);
+  }, [currentPage]);
+
   const handleDeleteUser = async () => {
     if (!selectedId) return;
     try {
-      const token = localStorage.getItem('token')
+      const token = localStorage.getItem("token");
       await api.delete(`/users/${selectedId}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      fetchUsers();
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      fetchUsers(currentPage);
       closeModal();
       onDeleteSuccess();
     } catch (error) {
-      console.log('Error: ', error);
+      console.log("Error deleting user:", error);
     }
-  }
-  
+  };
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
+
+  const columns = ["Nama", "Email", "Aksi"];
+
   return (
     <>
       <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
         <div className="max-w-full overflow-x-auto">
           <div className="min-w-[1102px]">
             <Table>
-              {/* Table Header */}
+              {/* Header */}
               <TableHeader className="border-b border-gray-100 dark:border-white/[0.05]">
                 <TableRow>
                   {columns.map((column) => (
@@ -99,10 +136,16 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                 </TableRow>
               </TableHeader>
 
-              {/* Table Body */}
+              {/* Body */}
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                {users.length > 0 ? (
-                  users?.map((user) => (
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={3} className="text-center py-4">
+                      Memuat data...
+                    </TableCell>
+                  </TableRow>
+                ) : users.length > 0 ? (
+                  users.map((user) => (
                     <TableRow key={user.id}>
                       <TableCell className="px-5 py-4 sm:px-6 text-start">
                         <div className="flex items-center gap-3">
@@ -110,7 +153,11 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                             <Image
                               width={40}
                               height={40}
-                              src={user.image_url ? user.image_url : '/images/user/user-22.jpg'}
+                              src={
+                                user.image_url
+                                  ? user.image_url
+                                  : "/images/user/user-22.jpg"
+                              }
                               alt={user.name}
                             />
                           </div>
@@ -119,15 +166,15 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                               {user.name}
                             </span>
                             <span className="block text-gray-500 text-theme-xs dark:text-gray-400">
-                              {user.roles[0].name}
+                              {user.roles?.[0]?.name ?? "Tidak ada role"}
                             </span>
                           </div>
                         </div>
                       </TableCell>
+
                       <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                         {user.email}
                       </TableCell>
-                      {/* Action */}
 
                       <TableCell className="px-4 py-3 text-start">
                         <div className="flex items-center gap-3">
@@ -138,20 +185,24 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                           >
                             <EyeIcon size={16} />
                           </button>
-                          
+
                           <button
-                            onClick={() => router.push(`/user/update-user/${user.id}`)}
+                            onClick={() =>
+                              router.push(`/user/update-user/${user.id}`)
+                            }
                             className="inline-flex items-center gap-1.5 text-primary-500 hover:text-primary-600 text-sm font-medium transition-colors"
+                            title="Edit"
                           >
                             <PencilIcon size={16} />
                           </button>
 
                           <button
-                            className="inline-flex items-center gap-1.5 text-error-500 hover:text-error-600 text-sm font-medium transition-colors"
                             onClick={() => {
-                            setSelectedId(user.id);
-                            openModal();
-                          }}
+                              setSelectedId(user.id);
+                              openModal();
+                            }}
+                            className="inline-flex items-center gap-1.5 text-error-500 hover:text-error-600 text-sm font-medium transition-colors"
+                            title="Hapus"
                           >
                             <TrashIcon size={16} />
                           </button>
@@ -161,19 +212,32 @@ export default function BasicTableOne({ onDeleteSuccess }: { onDeleteSuccess: ()
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
+                    <TableCell
+                      colSpan={3}
+                      className="text-center py-4 text-gray-500"
+                    >
                       Tidak ada data.
                     </TableCell>
                   </TableRow>
                 )}
-
               </TableBody>
             </Table>
           </div>
         </div>
       </div>
 
-      {/* Modal Konfirmasi Delete */}
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-8">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
+
+      {/* Modal Hapus */}
       <Modal
         isOpen={isOpen}
         onClose={closeModal}

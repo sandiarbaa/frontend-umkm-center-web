@@ -5,6 +5,7 @@ import api from "../../../lib/api";
 import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import Pagination from "../tables/Pagination";
 
 interface Umkm {
   id: number;
@@ -15,36 +16,46 @@ interface Umkm {
   image_url: string;
 }
 
-// interface Meta {
-//   current_page: number;
-//   last_page: number;
-//   per_page: number;
-//   total: number;
-// }
-
-// interface ApiResponse {
-//   data: Umkm[];
-//   meta: Meta;
-// }
+interface ApiResponse {
+  data: Umkm[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
 
 export default function UmkmList() {
   const [umkms, setUmkms] = useState<Umkm[]>([]);
-  // const [meta, setMeta] = useState<Meta | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchUmkms = async () => {
+  const fetchUmkms = async (page = 1) => {
     try {
-      const res = await api.get<Umkm[]>("/public/umkms");
-      setUmkms(res.data);
-      // setMeta(res.data.meta);
+      setLoading(true);
+      const res = await api.get<ApiResponse>(`/public/umkms?page=${page}`);
+      const data = Array.isArray(res.data.data) ? res.data.data : [];
+      setUmkms(data);
+      setCurrentPage(res.data.current_page);
+      setTotalPages(res.data.last_page);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log("error: ", error);
+      setUmkms([])
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchUmkms();
-  }, []);
+    fetchUmkms(currentPage);
+  }, [currentPage]);
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <div className="mt-8">
@@ -54,7 +65,10 @@ export default function UmkmList() {
             drop-shadow-lg">Daftar UMKM</h2>
 
       {/* Grid Card */}
-      <div className="flex flex-col justify-center items-center md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {loading ? (
+        <p className="text-center text-gray-500">Memuat data...</p>
+      ) : (
+        <div className="flex flex-col justify-center items-center md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {umkms.length > 0 ? umkms.map((umkm) => (
           <Link
             href={`/welcome/umkm/${umkm.id}`}
@@ -100,6 +114,19 @@ export default function UmkmList() {
           <p className="text-center col-span-3 text-gray-500">Tidak ada UMKM tersedia.</p>
         )}
       </div>
+      )}
+      
+
+      {/* Pagination Section */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-10">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   );
 }

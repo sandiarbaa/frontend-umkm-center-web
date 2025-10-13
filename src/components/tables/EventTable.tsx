@@ -15,6 +15,7 @@ import { Modal } from "../ui/modal";
 import { useModal } from "@/hooks/useModal";
 import api from "../../../lib/api";
 import { useRouter } from "next/navigation";
+import Pagination from "../tables/Pagination";
 
 interface Event {
   id: number;
@@ -28,6 +29,14 @@ interface Event {
   created_at: string;
 }
 
+interface ApiResponse {
+  data: Event[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
 export default function EventTable({
   onDeleteSuccess,
 }: {
@@ -36,24 +45,44 @@ export default function EventTable({
   const [events, setEvents] = useState<Event[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const { isOpen, openModal, closeModal } = useModal();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+
   const router = useRouter();
 
-  const fetchEvents = async () => {
+  // Fetch data event dengan pagination
+  const fetchEvents = async (page = 1) => {
     try {
+      setLoading(true);
       const token = localStorage.getItem("token");
-      const res = await api.get("/events", {
+      const res = await api.get<ApiResponse>(`/events?page=${page}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setEvents(res.data.data);
+
+      const responseData = Array.isArray(res.data)
+        ? res.data
+        : Array.isArray(res.data.data)
+        ? res.data.data
+        : [];
+
+      setEvents(responseData);
+      setCurrentPage(res.data.current_page ?? 1);
+      setTotalPages(res.data.last_page ?? 1);
     } catch (error) {
       console.error("Error fetching events:", error);
+      setEvents([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    fetchEvents(currentPage);
+  }, [currentPage]);
 
+  // Hapus event
   const handleDeleteEvent = async () => {
     if (!selectedId) return;
     try {
@@ -61,11 +90,17 @@ export default function EventTable({
       await api.delete(`/events/${selectedId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      fetchEvents();
+      fetchEvents(currentPage);
       closeModal();
       onDeleteSuccess();
     } catch (error) {
       console.error("Gagal hapus event:", error);
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
     }
   };
 
@@ -92,7 +127,13 @@ export default function EventTable({
               </TableHeader>
 
               <TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-                {events.length > 0 ? (
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center py-4">
+                      Memuat data...
+                    </TableCell>
+                  </TableRow>
+                ) : events.length > 0 ? (
                   events.map((event) => (
                     <TableRow key={event.id}>
                       <TableCell className="px-5 py-4 sm:px-6 text-start">
@@ -161,7 +202,10 @@ export default function EventTable({
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
+                    <TableCell
+                      colSpan={4}
+                      className="text-center py-4 text-gray-500"
+                    >
                       Tidak ada data.
                     </TableCell>
                   </TableRow>
@@ -171,6 +215,17 @@ export default function EventTable({
           </div>
         </div>
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-8">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
 
       {/* Modal konfirmasi delete */}
       <Modal

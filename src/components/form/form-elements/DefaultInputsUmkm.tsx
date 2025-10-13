@@ -43,11 +43,11 @@ export default function DefaultInputsUmkm() {
 
     const fetchUsers = async () => {
       try {
-        const res = await api.get("/users", {
+        const res = await api.get("/users/dropdown", {
           headers: { Authorization: `Bearer ${token}` },
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const options = res.data.map((u: any) => ({
+        const options = res.data.data.map((u: any) => ({
           value: u.id,
           label: u.name,
         }));
