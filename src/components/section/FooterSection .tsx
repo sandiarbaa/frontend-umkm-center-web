@@ -12,7 +12,7 @@ export default function FooterSection() {
         </h1>
       </div>
       <div>
-        <h2 className="tracking-widest text-sm text-black">
+        <h2 className="tracking-widest text-sm text-black text-center">
           Made with ❤️ Copyright &copy; 2025
         </h2>
       </div>
@@ -20,7 +20,7 @@ export default function FooterSection() {
             <h2 className="tracking-widest font-bold text-sm 
                       bg-gradient-to-br from-blue-700 to-indigo-900 
             bg-clip-text text-transparent 
-            drop-shadow-lg">
+            drop-shadow-lg text-center">
           KELOMPOK 3 KEREN!
         </h2>
       </div>
