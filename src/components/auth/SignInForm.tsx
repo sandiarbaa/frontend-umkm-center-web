@@ -13,10 +13,11 @@ import { useRole } from "@/context/RoleContext";
 export default function SignInForm() {
   const router = useRouter()
   const { setId, setName, setRole } = useRole();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false)
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,11 +44,16 @@ export default function SignInForm() {
       setName(userName);
       setRole(userRole);
 
-      // redirect ke dashboard atau page lain
       router.push('/')
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.error('Login gagal:', error.response?.data || error.message);
+      console.error("Login gagal:", error.response?.data || error.message);
+
+      if (error.response?.data?.message) {
+        setErrorMessage("email atau password salah.");
+      } else {
+        setErrorMessage("Terjadi kesalahan pada server, coba lagi nanti.");
+      }
     } finally {
       setLoading(false)
     }
@@ -77,6 +83,13 @@ export default function SignInForm() {
           <div>
             <form onSubmit={handleSubmit}>
               <div className="space-y-6">
+                {/* 🔴 Alert error */}
+                {errorMessage && (
+                  <div className="p-3 text-sm text-red-700 bg-red-100 rounded-lg border border-red-300">
+                    {errorMessage}
+                  </div>
+                )}
+                
                 <div>
                   <Label>
                     Email <span className="text-error-500">*</span>{" "}
